@@ -1,0 +1,46 @@
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "Items/SmartPointer.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+namespace dxcodegen
+{
+  namespace Items
+  {
+    class NewMethodSpecificCode : public SmartPointer
+    {
+    public:
+
+      NewMethodSpecificCode(const std::string& name);
+      virtual ~NewMethodSpecificCode();
+      
+      std::string GetName() const;
+      
+      bool GetIsPublic() const;
+      void SetIsPublic(bool isPublic);
+
+      std::string GetDefinition() const;
+      void SetDefinition(const std::string& definition);
+
+    protected:
+
+      std::string m_name;
+      bool m_isPublic;
+      std::string m_definition;
+
+    };
+
+    ////////////////////////////////////////////////////////////////////////////
+    
+    typedef smart_ptr<NewMethodSpecificCode> NewMethodSpecificCodePtr;
+
+    ////////////////////////////////////////////////////////////////////////////
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////

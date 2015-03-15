@@ -1,0 +1,568 @@
+Simulator Parameters.
+--------------------
+
+Input File = tracefile.txt.gz
+Signal Trace File = signaltrace.txt
+Statistics File = stats.cycles.csv.gz
+Statistics (Per Frame) File = stats.frames.csv.gz
+Statistics (Per Batch) File = stats.batches.csv.gz
+Simulation Cycles = 0
+Simulation Frames = 1
+Simulation Start Frame = 125
+Signal Trace Dump = disabled
+Signal Trace Start Cycle = 0
+Signal Trace Dump Cycles = 10000
+Statistics Generation = enabled
+Statistics (Per Cycle) Generation = disabled
+Statistics (Per Frame) Generation = enabled
+Statistics (Per Batch) Generation = disabled
+Statistics Rate = 10000
+Dectect Stalls = enabled
+EnableDriverShaderTranslation = true
+VertexAttributeLoadFromShader = false
+VectorALUConfig = simd4+scalar
+OptimizedDynamicMemory => FAST_NEW_DELETE enabled.  Ignoring third bucket!
+Using OpenGL Trace File as simulation input.
+Using Legacy Library.
+Using Memory Controller Version 2...
+Creating LookAheadScheduler: Sched0::LookAheadSched0
+Creating LookAheadScheduler: Sched1::LookAheadSched1
+Creating LookAheadScheduler: Sched2::LookAheadSched2
+Creating LookAheadScheduler: Sched3::LookAheadSched3
+Creating LookAheadScheduler: Sched4::LookAheadSched4
+Creating LookAheadScheduler: Sched5::LookAheadSched5
+Creating LookAheadScheduler: Sched6::LookAheadSched6
+Creating LookAheadScheduler: Sched7::LookAheadSched7
+MemoryController::createUsageSignals OK
+Creating StreamerLoader Unit 0
+Using the Classic Rasterizer Unit.
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Note: The first frame producing output (start frame) is frame 125
+Simulating 1 frames (1 dot : 10K cycles).
+
+TraceDriver: Setting resolution to 640x480
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 0 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 1 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 2 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 3 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 4 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 5 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 6 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 7 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 8 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 9 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 10 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 11 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 12 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 13 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 14 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 15 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 16 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 17 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 18 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 19 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 20 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 21 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 22 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 23 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 24 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 25 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 26 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 27 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 28 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 29 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 30 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 31 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 32 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 33 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 34 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 35 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 36 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 37 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 38 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 39 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 40 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 41 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 42 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 43 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 44 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 45 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 46 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 47 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 48 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 49 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 50 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 51 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 52 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 53 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 54 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 55 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 56 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 57 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 58 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 59 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 60 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 61 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 62 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 63 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 64 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 65 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 66 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 67 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 68 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 69 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 70 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 71 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 72 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 73 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 74 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 75 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 76 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 77 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 78 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 79 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 80 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 81 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 82 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 83 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 84 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 85 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 86 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 87 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 88 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 89 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 90 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 91 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 92 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 93 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 94 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 95 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 96 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 97 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 98 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 99 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 100 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 101 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 102 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 103 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 104 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 105 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 106 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 107 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 108 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 109 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 110 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 111 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 112 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 113 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 114 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 115 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 116 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 117 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 118 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 119 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 120 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 121 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 122 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 123 Skipped
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+Frame 124 Skipped
+TraceDriver::nextAGPTransaction() -> Disabling preload...
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+CP => Cycle 1262. End of preload phase.  Starting simulation.
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+..Dumping frame 125
+GPUDriver => Memory usage : GPU 763 blocks | System 0 blocks
+.B........................................................................................................................B.CP => Cycle 1245958. Lasted 1244697 cycles. Frame rendered.
+..DAC => Cycle 1261367 Color Buffer Dumped.
+
+END Cycle 1261369 ----------------------------
+Bucket 0: Size 262144 Last 510 Max 0 | Bucket 1: Size 32768 Last 0 Max 0 | Bucket 2: Size 65536 Last 0 Max 0
+
+Simulation clock time = 375 seconds
+
+
+End of simulation
+
+

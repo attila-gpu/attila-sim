@@ -1,0 +1,29 @@
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+#include <streambuf>
+
+////////////////////////////////////////////////////////////////////////////////
+
+class arraystream : public std::streambuf
+{
+public:
+
+  arraystream(char* buffer, std::size_t size);
+  virtual ~arraystream();
+  
+  char* get_buffer();
+  unsigned int get_available_size() const;
+  int tellp() const;
+  void pbump(int count);
+  char* finalize();
+
+protected:
+
+  char* m_buffer;
+  std::size_t m_size;
+
+};
+
+////////////////////////////////////////////////////////////////////////////////

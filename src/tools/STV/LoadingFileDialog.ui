@@ -1,0 +1,58 @@
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>LoadingFileDialog</class>
+  <widget class="QDialog" name="LoadingFileDialog" >
+    <property name="geometry" stdset="0" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>528</width>
+        <height>140</height>
+      </rect>
+    </property>
+    <property name="windowTitle" stdset="0" >
+      <string>Loading tracefile...</string>
+    </property>
+    <widget class="QLabel" name="TextLabel1" >
+      <property name="geometry" stdset="0" >
+        <rect>
+          <x>110</x>
+          <y>20</y>
+          <width>271</width>
+          <height>41</height>
+        </rect>
+      </property>
+      <property name="frameShape" stdset="0" >
+        <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow" stdset="0" >
+        <enum>QFrame::Raised</enum>
+      </property>
+      <property name="text" stdset="0" >
+        <string>Loading tracefile, please wait...</string>
+      </property>
+      <property name="textFormat" stdset="0" >
+        <enum>Qt::RichText</enum>
+      </property>
+      <property name="alignment" stdset="0" >
+        <set>Qt::AlignCenter</set>
+      </property>
+      <property name="wordWrap" >
+        <bool>false</bool>
+      </property>
+    </widget>
+    <widget class="Q3ProgressBar" name="pBar" >
+      <property name="geometry" stdset="0" >
+        <rect>
+          <x>80</x>
+          <y>80</y>
+          <width>380</width>
+          <height>40</height>
+        </rect>
+      </property>
+    </widget>
+  </widget>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+</ui>

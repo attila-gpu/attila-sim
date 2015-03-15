@@ -1,0 +1,250 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Español resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
+#ifdef _WIN32
+LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)\r\n"
+    "LANGUAGE 10, 3\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#include ""afxres.rc""         // Componentes estándar\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_DXLOADER            ICON                    "res\\dxloader.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "0c0a04e4"
+        BEGIN
+            VALUE "FileDescription", "Loads a DirectX 9.0 application injecting a calls interceptor DLL"
+            VALUE "FileVersion", "1.0.0.0"
+            VALUE "InternalName", "DXLoader"
+            VALUE "LegalCopyright", "(c) 2007 David Abella"
+            VALUE "OriginalFilename", "dxloader.exe"
+            VALUE "ProductName", "DXLoader"
+            VALUE "ProductVersion", "1.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0xc0a, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DXLOADER_DIALOG DIALOGEX 0, 0, 254, 137
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | 
+    WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "DXLoader"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Run",IDOK,91,114,71,16
+    LTEXT           "DXInterceptor DLL:",IDC_LBL_DLL,7,95,62,8
+    COMBOBOX        IDC_CBO_DLL,75,92,117,30,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Program to load:",IDC_LBL_BROWSE,7,61,54,8
+    EDITTEXT        IDC_TXT_BROWSE,7,72,185,12,ES_AUTOHSCROLL | ES_READONLY,
+                    WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Browse...",IDC_BTN_BROWSE,197,70,50,16
+    CONTROL         130,IDC_LOGO,"Static",SS_BITMAP,7,7,240,49
+    PUSHBUTTON      "DLL Options",IDC_BTN_OPTIONS,197,91,50,16
+END
+
+IDD_DXOPTIONS_DIALOG DIALOGEX 0, 0, 242, 231
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION
+CAPTION "<dll> Options"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Save",IDOK,51,210,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,141,210,50,14
+    EDITTEXT        IDC_TXT_BROWSE_DESTPATH,7,20,173,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "Browse",IDC_BTN_BROWSE_DESTPATH,185,19,50,14
+    LTEXT           "Saved traces destination path:",IDC_LBL_BROWSE_DESTPATH,
+                    7,9,100,8
+    GROUPBOX        "Storage options",IDC_SHP_STORAGE,7,36,228,26
+    CONTROL         "Enable compression",IDC_CHK_ENABLECOMPRESSION,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,47,214,10
+    LTEXT           "Position:",IDC_LBL_BANNERPOSITION,15,92,58,8
+    COMBOBOX        IDC_CBO_PROGRESSBANNERPOSITION,138,89,92,54,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Progress banner options",IDC_SHP_PROGRESSBANNER,7,66,
+                    228,58
+    CONTROL         "Show banner",IDC_CHK_SHOWPROGRESSBANNER,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,78,214,10
+    LTEXT           "Text color:",IDC_LBL_PROGRRESSBANNERTEXTCOLOR,15,107,58,
+                    8
+    PUSHBUTTON      "",IDC_BTN_PROGRESSBANNERTEXTCOLOR,138,105,92,12
+    GROUPBOX        "Statistics Plugins options",IDC_SHP_STATISTICS,7,127,
+                    228,75
+    CONTROL         "Statistics Counters",IDC_STATISTICS_COUNTERS,
+                    "TreeListCtrl.Tree",0x0,11,138,219,59
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DXLOADER_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 247
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 130
+    END
+
+    IDD_DXOPTIONS_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 235
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 224
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+IDR_MANIFEST            RT_MANIFEST             "res\\dxloader.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LOGO                BITMAP                  "res\\logo.bmp"
+IDB_TREELIST_DISABLE    BITMAP                  "res\\treelist\\bm_bkgnd2.bmp"
+IDB_TREELIST_CHECK      BITMAP                  "res\\treelist\\bm_checkbox.bmp"
+IDB_TREELIST_LOCK       BITMAP                  "res\\treelist\\bm_lockbox.bmp"
+IDB_TREELIST_TREE       BITMAP                  "res\\treelist\\bm_def_tree.bmp"
+IDB_TREELIST_SORT       BITMAP                  "res\\treelist\\bm_def_sort.bmp"
+IDB_TREELIST_HEADER     BITMAP                  "res\\treelist\\bm_def_head.bmp"
+IDB_TREELIST_BITMAP     BITMAP                  "res\\treelist\\bm_bkgnd.bmp"
+IDB_TREELIST_ICONS      BITMAP                  "res\\treelist\\bm_treeicons.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_CURSOR_SIZE         CURSOR                  "res\\treelist\\cur_size.cur"
+IDC_CURSOR_BUTTON       CURSOR                  "res\\treelist\\cur_button.cur"
+IDC_CURSOR_CHECK        CURSOR                  "res\\treelist\\cur_checkbox.cur"
+IDC_CURSOR_LOCK         CURSOR                  "res\\treelist\\cur_lockbox.cur"
+IDC_CURSOR_SPLIT        CURSOR                  "res\\treelist\\cur_split.cur"
+IDC_CURSOR_VERT         CURSOR                  "res\\treelist\\cur_vert.cur"
+IDC_CURSOR_HORZ         CURSOR                  "res\\treelist\\cur_horz.cur"
+IDC_CURSOR_CROSS        CURSOR                  "res\\treelist\\cur_cross.cur"
+IDC_CURSOR_DROP         CURSOR                  "res\\treelist\\cur_drop.cur"
+IDC_CURSOR_STOP         CURSOR                  "res\\treelist\\cur_stop.cur"
+#endif    // Español resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESN)
+LANGUAGE 10, 3
+#pragma code_page(1252)
+#include "afxres.rc"         // Componentes estándar
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

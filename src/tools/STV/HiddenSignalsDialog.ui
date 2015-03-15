@@ -1,0 +1,115 @@
+<ui version="4.0" >
+ <class>HiddenSignalsDialog</class>
+ <widget class="QDialog" name="HiddenSignalsDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>403</width>
+    <height>416</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Hidden signals</string>
+  </property>
+  <widget class="QLabel" name="textLabel1" >
+   <property name="geometry" >
+    <rect>
+     <x>-20</x>
+     <y>20</y>
+     <width>440</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>&lt;blockquote>Hidden signals are signals that are not visible currently, they can be made visible selecting them from the list and clicking in the button &lt;b>Make Visible&lt;/b>&lt;/blockquote></string>
+   </property>
+   <property name="wordWrap" >
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="MakeVisibleButton" >
+   <property name="geometry" >
+    <rect>
+     <x>50</x>
+     <y>350</y>
+     <width>140</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Make Visible</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="CancelButton" >
+   <property name="geometry" >
+    <rect>
+     <x>210</x>
+     <y>350</y>
+     <width>140</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="Q3ListBox" name="HiddenSignalsList" >
+   <property name="geometry" >
+    <rect>
+     <x>30</x>
+     <y>100</y>
+     <width>341</width>
+     <height>210</height>
+    </rect>
+   </property>
+   <property name="selectionMode" >
+    <enum>Q3ListBox::Extended</enum>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>Q3ListBox</class>
+   <extends>Q3Frame</extends>
+   <header>q3listbox.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>MakeVisibleButton</sender>
+   <signal>clicked()</signal>
+   <receiver>HiddenSignalsDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>CancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>HiddenSignalsDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

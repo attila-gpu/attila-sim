@@ -1,0 +1,455 @@
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>PreferencesDialog</class>
+  <widget class="QDialog" name="PreferencesDialog" >
+    <property name="geometry" stdset="0" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>546</width>
+        <height>307</height>
+      </rect>
+    </property>
+    <property name="windowTitle" stdset="0" >
+      <string>Preferences</string>
+    </property>
+    <property name="sizeGripEnabled" stdset="0" >
+      <bool>true</bool>
+    </property>
+    <layout class="QVBoxLayout" >
+      <property name="margin" stdset="0" >
+        <number>11</number>
+      </property>
+      <property name="spacing" stdset="0" >
+        <number>6</number>
+      </property>
+      <item>
+        <widget class="QTabWidget" name="tabWidget" >
+          <property name="tabShape" stdset="0" >
+            <enum>QTabWidget::Rounded</enum>
+          </property>
+          <widget class="QWidget" name="Widget2" >
+            <attribute name="title" >
+              <string>Edit configuration file</string>
+            </attribute>
+            <widget class="QCheckBox" name="showDivisionLinesCB" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>50</x>
+                  <y>150</y>
+                  <width>148</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Show division lines</string>
+              </property>
+            </widget>
+            <widget class="QCheckBox" name="showSignalsRulerCB" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>50</x>
+                  <y>70</y>
+                  <width>148</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Show signals ruler</string>
+              </property>
+            </widget>
+            <widget class="QCheckBox" name="autoHideRulersCB" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>50</x>
+                  <y>110</y>
+                  <width>148</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Autohide rulers</string>
+              </property>
+            </widget>
+            <widget class="QLabel" name="TextLabel1_2" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>240</x>
+                  <y>110</y>
+                  <width>105</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Load at maximum</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QLineEdit" name="loadMaxCyclesTL" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>380</x>
+                  <y>100</y>
+                  <width>80</width>
+                  <height>25</height>
+                </rect>
+              </property>
+              <property name="maxLength" stdset="0" >
+                <number>10</number>
+              </property>
+            </widget>
+            <widget class="QLabel" name="TextLabel2" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>480</x>
+                  <y>110</y>
+                  <width>40</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>cycles</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QLabel" name="TextLabel2_2" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>480</x>
+                  <y>30</y>
+                  <width>40</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>pixels</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QLineEdit" name="sizeSquareTL" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>380</x>
+                  <y>30</y>
+                  <width>80</width>
+                  <height>25</height>
+                </rect>
+              </property>
+            </widget>
+            <widget class="QLabel" name="TextLabel1_3_2" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>280</x>
+                  <y>60</y>
+                  <width>180</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>( range from 2 to 100  pixels )</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QLabel" name="TextLabel3" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>280</x>
+                  <y>140</y>
+                  <width>201</width>
+                  <height>16</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>( 0 means max cycles in trace file )</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QLabel" name="TextLabel1_3" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>240</x>
+                  <y>30</y>
+                  <width>120</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Default Square Size</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QCheckBox" name="showCyclesRulerCB" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>50</x>
+                  <y>30</y>
+                  <width>148</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Show cycles ruler</string>
+              </property>
+            </widget>
+          </widget>
+          <widget class="QWidget" name="tab" >
+            <attribute name="title" >
+              <string>Others</string>
+            </attribute>
+            <widget class="QLabel" name="TextLabel1_3_3" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>30</x>
+                  <y>40</y>
+                  <width>80</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Cache size</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QLabel" name="TextLabel1_3_3_2" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>30</x>
+                  <y>100</y>
+                  <width>170</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Horizontal Slider Page Step</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QLabel" name="TextLabel2_2_2_2" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>210</x>
+                  <y>130</y>
+                  <width>50</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Cycles</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QLabel" name="TextLabel2_2_2" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>210</x>
+                  <y>40</y>
+                  <width>270</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Pages (each contains 1024 cycle information)</string>
+              </property>
+              <property name="wordWrap" >
+                <bool>false</bool>
+              </property>
+            </widget>
+            <widget class="QLineEdit" name="cacheSizeTL" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>110</x>
+                  <y>40</y>
+                  <width>80</width>
+                  <height>25</height>
+                </rect>
+              </property>
+            </widget>
+            <widget class="QLineEdit" name="pageStepTL" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>110</x>
+                  <y>130</y>
+                  <width>80</width>
+                  <height>25</height>
+                </rect>
+              </property>
+            </widget>
+          </widget>
+          <widget class="QWidget" name="tab" >
+            <attribute name="title" >
+              <string>Information level</string>
+            </attribute>
+            <widget class="QCheckBox" name="showDefaultInfoCB" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>40</x>
+                  <y>60</y>
+                  <width>330</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Show default information  (defined in ColorMap file)</string>
+              </property>
+            </widget>
+            <widget class="QCheckBox" name="showIndividualInfoCB" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>40</x>
+                  <y>20</y>
+                  <width>440</width>
+                  <height>20</height>
+                </rect>
+              </property>
+              <property name="text" stdset="0" >
+                <string>Show individual information  (defined when generating SignalTrace file)</string>
+              </property>
+            </widget>
+            <widget class="Q3ButtonGroup" name="colorOptionsBG" >
+              <property name="geometry" stdset="0" >
+                <rect>
+                  <x>20</x>
+                  <y>100</y>
+                  <width>480</width>
+                  <height>90</height>
+                </rect>
+              </property>
+              <property name="title" stdset="0" >
+                <string>Show cookies and color enum values</string>
+              </property>
+              <widget class="QRadioButton" name="colEnumOptionRB" >
+                <property name="geometry" stdset="0" >
+                  <rect>
+                    <x>100</x>
+                    <y>40</y>
+                    <width>150</width>
+                    <height>20</height>
+                  </rect>
+                </property>
+                <property name="text" stdset="0" >
+                  <string>Color enum number</string>
+                </property>
+              </widget>
+              <widget class="QRadioButton" name="colCookiesOptionRB" >
+                <property name="geometry" stdset="0" >
+                  <rect>
+                    <x>260</x>
+                    <y>40</y>
+                    <width>200</width>
+                    <height>20</height>
+                  </rect>
+                </property>
+                <property name="text" stdset="0" >
+                  <string>Cookies &amp; color enum number</string>
+                </property>
+              </widget>
+              <widget class="QRadioButton" name="colNoneOptionRB" >
+                <property name="geometry" stdset="0" >
+                  <rect>
+                    <x>20</x>
+                    <y>40</y>
+                    <width>81</width>
+                    <height>21</height>
+                  </rect>
+                </property>
+                <property name="text" stdset="0" >
+                  <string>None</string>
+                </property>
+              </widget>
+            </widget>
+          </widget>
+        </widget>
+      </item>
+      <item>
+        <layout class="QHBoxLayout" >
+          <property name="margin" stdset="0" >
+            <number>0</number>
+          </property>
+          <property name="spacing" stdset="0" >
+            <number>6</number>
+          </property>
+          <item>
+            <spacer name="Horizontal Spacing2" >
+              <property name="sizeHint" >
+                <size>
+                  <width>20</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="sizeType" >
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QPushButton" name="buttonOk" >
+              <property name="text" stdset="0" >
+                <string>&amp;Apply preferences</string>
+              </property>
+              <property name="autoDefault" stdset="0" >
+                <bool>true</bool>
+              </property>
+              <property name="default" stdset="0" >
+                <bool>true</bool>
+              </property>
+              <property name="toolTip" >
+                <string>save changes to config file</string>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="buttonCancel" >
+              <property name="text" stdset="0" >
+                <string>&amp;Cancel</string>
+              </property>
+              <property name="autoDefault" stdset="0" >
+                <bool>true</bool>
+              </property>
+              <property name="toolTip" >
+                <string>discard changes</string>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <connections>
+    <connection>
+      <sender>buttonOk</sender>
+      <signal>clicked()</signal>
+      <receiver>PreferencesDialog</receiver>
+      <slot>accept()</slot>
+    </connection>
+    <connection>
+      <sender>buttonCancel</sender>
+      <signal>clicked()</signal>
+      <receiver>PreferencesDialog</receiver>
+      <slot>reject()</slot>
+    </connection>
+  </connections>
+</ui>

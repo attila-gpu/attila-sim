@@ -1,0 +1,7 @@
+<hr size="1">
+<div align="right">
+<address><small>Created on $datetime for $projectname</small></address>
+<address><small>Copyright &copy; 2007 <a href="mailto:david.abella@gmail.com">David Abella</a>. All Rights Reserved.</small></address>
+</div>
+</body>
+</html>

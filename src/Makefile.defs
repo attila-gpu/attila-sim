@@ -1,0 +1,58 @@
+###########################################################################
+# 
+#  Copyright (c) 2002, 2003 by Computer Architecture Department,
+#  Universitat Politecnica de Catalunya.
+#  All rights reserved.
+# 
+#  The contents of this file may not be disclosed to third parties,
+#  copied or duplicated in any form, in whole or in part, without the
+#  prior permission of the authors, Computer Architecture Department
+#  and Universitat Politecnica de Catalunya.
+# 
+#  $RCSfile: Makefile.defs,v $
+#  $Revision: 1.34 $
+#  $Author: vmoya $
+#  $Date: 2007-11-01 21:14:16 $
+# 
+#  GPU3D framework Makefile definitions. 
+# 
+# 
+
+# Tools 
+
+CC = gcc
+CX = g++
+AR = ar
+MAKE = make
+
+# Directories
+
+GPU3DHOME = $(HOME)/gpu3d
+
+BINDIR = $(GPU3DHOME)/bin
+SRCDIR = $(GPU3DHOME)/src
+LIBDIR = $(GPU3DHOME)/lib
+OBJDIR = $(GPU3DHOME)/obj
+DOCDIR = $(GPU3DHOME)/doc
+
+GPUDIR = $(SRCDIR)/gpu
+SIMDIR = $(SRCDIR)/sim
+EMUDIR = $(SRCDIR)/emul
+SUPPORTDIR = $(SRCDIR)/support
+SHSIMDIR = $(SRCDIR)/shSim
+BGPUDIR = $(SRCDIR)/bgpu
+TRACEDIR = $(SRCDIR)/trace
+
+GLDIR = $(SRCDIR)/GL
+
+# Optional compilation flags
+DEBUGFLG = -O0 -g -fno-inline
+PROFFLG = -O4 -pg
+OPTFLG = -O4 -static -static-libgcc
+#OPTFLG = -O4
+VERBFLG = -DGPU_DEBUG_ON
+
+# Machine specific flags
+#WHEREFLAGS = -D _LINUX_ -D GL_GLEXT_LEGACY -D GL_GLEXT_PROTOTYPES
+WHEREFLAGS = -D _CYGWIN_ -D GL_GLEXT_LEGACY -D GL_GLEXT_PROTOTYPES
+

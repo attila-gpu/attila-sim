@@ -1,0 +1,92 @@
+!!ARBfp1.0
+OPTION ARB_precision_hint_fastest;
+
+# texture 0 is the cube map
+# texture 1 is the per-surface bump map
+# texture 2 is the light falloff texture
+# texture 3 is the light projection texture
+# texture 4 is the per-surface diffuse map
+# texture 5 is the per-surface specular map
+# texture 6 is the specular lookup table
+
+# env[0] is the diffuse modifier
+# env[1] is the specular modifier
+
+TEMP    toLight, light, toViewer, reflection, color, R1, R2, localNormal;
+
+PARAM   subOne = { -1, -1, -1, -1 };
+PARAM   scaleTwo = { 2, 2, 2, 2 };
+PARAM   pointFive = { 0.5, 0.5, 0.5, 0.5 };
+
+
+#
+# the amount of light contacting the fragment is the
+# product of the two light projections and the surface
+# bump mapping
+#
+
+# normalize the direction to the light
+DP3             toLight, fragment.texcoord[0],fragment.texcoord[0];
+RSQ             toLight, toLight.x;
+MUL             toLight, toLight.x, fragment.texcoord[0];
+
+# normalize the direction to the viewer
+DP3             toViewer, fragment.texcoord[6],fragment.texcoord[6];
+RSQ             toViewer, toViewer.x;
+MUL             toViewer, toViewer.x, fragment.texcoord[6];
+
+# load the filtered normal map, then normalize to full scale,
+# leaving the divergence in .w unmodified
+TEX             localNormal, fragment.texcoord[1], texture[1], 2D;
+MAD             localNormal.xyz, localNormal, scaleTwo, subOne;
+DP3             R1, localNormal,localNormal;
+RSQ             R1, R1.x;
+MUL             localNormal.xyz, localNormal, R1;
+
+# diffuse dot product
+DP3             light, toLight, localNormal;
+
+# modulate by the light projection
+TXP             R1, fragment.texcoord[3], texture[3], 2D;
+MUL             light, light, R1;
+
+# modulate by the light falloff
+TXP             R1, fragment.texcoord[2], texture[2], 2D;
+MUL             light, light, R1;
+
+# modulate by the diffuse map and constant diffuse factor
+TEX             R1, fragment.texcoord[4], texture[4], 2D;
+MUL             color, R1, program.env[0];
+
+# calculate the specular reflection vector from light and localNormal
+DP3             R1, toLight, localNormal;
+MUL             R1, R1,localNormal;
+MAD             reflection, R1, scaleTwo, -toLight;
+DP3             R1, toViewer, reflection;
+
+# perform a dependent table read for the specular falloff
+# s = specular dot product, t = local normal divergence
+MOV     R1.y, localNormal.w;
+MOV     R1.y, 0.2;
+MOV R1.w, 1;
+TEX     R1, R1, texture[6], 2D;
+
+# modulate by the constant specular factor
+MUL     R1, R1, program.env[1];
+
+# modulate by the specular map * 2
+TEX     R2, fragment.texcoord[5], texture[5], 2D;
+ADD     R2, R2, R2;
+MAD     color, R1, R2, color;
+
+MUL     color, light, color;
+
+# modify by the vertex color
+
+MUL result.color, color, fragment.color;
+
+# this should be better on future hardware, but current drivers make it slower
+#MUL result.color.xyz, color, fragment.color;
+
+
+END

@@ -1,0 +1,420 @@
+<!DOCTYPE UI><UI>
+<class>PreferencesDialog</class>
+<widget>
+    <class>QDialog</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>PreferencesDialog</cstring>
+    </property>
+    <property>
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>566</width>
+            <height>307</height>
+        </rect>
+    </property>
+    <property>
+        <name>caption</name>
+        <string>Preferences</string>
+    </property>
+    <property>
+        <name>sizeGripEnabled</name>
+        <bool>true</bool>
+    </property>
+    <vbox>
+        <property>
+            <name>margin</name>
+            <number>11</number>
+        </property>
+        <property>
+            <name>spacing</name>
+            <number>6</number>
+        </property>
+        <widget>
+            <class>QTabWidget</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>tabWidget</cstring>
+            </property>
+            <property>
+                <name>tabShape</name>
+                <enum>Rounded</enum>
+            </property>
+            <widget>
+                <class>QWidget</class>
+                <property stdset="1">
+                    <name>name</name>
+                    <cstring>Widget2</cstring>
+                </property>
+                <attribute>
+                    <name>title</name>
+                    <string>Edit configuration file</string>
+                </attribute>
+                <widget>
+                    <class>QCheckBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>showDivisionLinesCB</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>50</x>
+                            <y>150</y>
+                            <width>148</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>Show division lines</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QCheckBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>showSignalsRulerCB</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>50</x>
+                            <y>70</y>
+                            <width>148</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>Show signals ruler</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QCheckBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>showCyclesRulerCB</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>50</x>
+                            <y>30</y>
+                            <width>148</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>Show cycles ruler</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QCheckBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>autoHideRulersCB</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>50</x>
+                            <y>110</y>
+                            <width>148</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>Autohide rulers</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel1_2</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>240</x>
+                            <y>110</y>
+                            <width>105</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>Load at maximum</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel3</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>280</x>
+                            <y>140</y>
+                            <width>201</width>
+                            <height>16</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>( 0 means max cycles in trace file )</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel2_2</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>480</x>
+                            <y>30</y>
+                            <width>40</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>pixels</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLineEdit</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>loadMaxCyclesTL</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>380</x>
+                            <y>100</y>
+                            <width>80</width>
+                            <height>25</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>maxLength</name>
+                        <number>10</number>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel2</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>480</x>
+                            <y>110</y>
+                            <width>40</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>cycles</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel1_3</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>240</x>
+                            <y>30</y>
+                            <width>120</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>Default Square Size</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel1_3_2</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>280</x>
+                            <y>60</y>
+                            <width>180</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>( range from 2 to 100  pixels )</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QLineEdit</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>sizeSquareTL</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>380</x>
+                            <y>30</y>
+                            <width>80</width>
+                            <height>25</height>
+                        </rect>
+                    </property>
+                </widget>
+            </widget>
+            <widget>
+                <class>QWidget</class>
+                <property stdset="1">
+                    <name>name</name>
+                    <cstring>tab</cstring>
+                </property>
+                <attribute>
+                    <name>title</name>
+                    <string>More options</string>
+                </attribute>
+                <widget>
+                    <class>QLabel</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>TextLabel1</cstring>
+                    </property>
+                    <property>
+                        <name>geometry</name>
+                        <rect>
+                            <x>80</x>
+                            <y>40</y>
+                            <width>146</width>
+                            <height>16</height>
+                        </rect>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>More options in the future...</string>
+                    </property>
+                </widget>
+            </widget>
+        </widget>
+        <widget>
+            <class>QLayoutWidget</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>Layout1</cstring>
+            </property>
+            <hbox>
+                <property>
+                    <name>margin</name>
+                    <number>0</number>
+                </property>
+                <property>
+                    <name>spacing</name>
+                    <number>6</number>
+                </property>
+                <spacer>
+                    <property>
+                        <name>name</name>
+                        <cstring>Horizontal Spacing2</cstring>
+                    </property>
+                    <property>
+                        <name>orientation</name>
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property>
+                        <name>sizeType</name>
+                        <enum>Expanding</enum>
+                    </property>
+                    <property>
+                        <name>sizeHint</name>
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget>
+                    <class>QPushButton</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>buttonOk</cstring>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>&amp;Apply preferences</string>
+                    </property>
+                    <property>
+                        <name>autoDefault</name>
+                        <bool>true</bool>
+                    </property>
+                    <property>
+                        <name>default</name>
+                        <bool>true</bool>
+                    </property>
+                    <property>
+                        <name>toolTip</name>
+                        <string>save changes to config file</string>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QPushButton</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>buttonCancel</cstring>
+                    </property>
+                    <property>
+                        <name>text</name>
+                        <string>&amp;Cancel</string>
+                    </property>
+                    <property>
+                        <name>autoDefault</name>
+                        <bool>true</bool>
+                    </property>
+                    <property>
+                        <name>toolTip</name>
+                        <string>discard changes</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>buttonOk</sender>
+        <signal>clicked()</signal>
+        <receiver>PreferencesDialog</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>buttonCancel</sender>
+        <signal>clicked()</signal>
+        <receiver>PreferencesDialog</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+</UI>

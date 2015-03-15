@@ -1,0 +1,28 @@
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Windows headers
+#include <tchar.h>
+#include <shlwapi.h>
+
+// STL headers
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <list>
+#include <map>
+
+// Standard C headers
+#include <ctime>
+
+// DirectX 9.0 headers
+#include <d3d9.h>
+
+////////////////////////////////////////////////////////////////////////////////

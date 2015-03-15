@@ -1,0 +1,76 @@
+////////////////////////////////////////////////////////////////////////////////
+
+#include "stdafx.h"
+#include "DXInterceptorStub.h"
+#include "IReferenceCounter.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+// {BF7F3515-A717-4cff-A3E6-94746CCFAD79}
+const IID IID_IReferenceCounter =
+{ 0xbf7f3515, 0xa717, 0x4cff, { 0xa3, 0xe6, 0x94, 0x74, 0x6c, 0xcf, 0xad, 0x79 } };
+
+////////////////////////////////////////////////////////////////////////////////
+
+IReferenceCounter::IReferenceCounter(DXInterceptorStub* owner) :
+m_referenceCount(1),
+m_owner(owner)
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+IReferenceCounter::~IReferenceCounter()
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+DXInterceptorStub* IReferenceCounter::GetOwner()
+{
+  return m_owner;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+HRESULT IReferenceCounter::QueryInterface(REFIID riid, void** ppvObj)
+{
+  if (IsEqualGUID(riid, IID_IUnknown))
+  {
+    *ppvObj = (IUnknown*) this;
+    AddRef();
+    return S_OK;
+  }
+
+  if (IsEqualGUID(riid, IID_IReferenceCounter))
+  {
+    *ppvObj = (IReferenceCounter*) this;
+    AddRef();
+    return S_OK;
+  }
+
+  *ppvObj = NULL;
+  return E_NOINTERFACE;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+ULONG IReferenceCounter::AddRef()
+{
+  return ++m_referenceCount;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+ULONG IReferenceCounter::Release()
+{
+  m_referenceCount--;
+  if (!m_referenceCount)
+  {
+    delete this;
+    return 0;
+  }
+  return m_referenceCount;
+}
+
+////////////////////////////////////////////////////////////////////////////////

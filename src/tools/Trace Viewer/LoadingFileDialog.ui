@@ -1,0 +1,81 @@
+<!DOCTYPE UI><UI>
+<class>LoadingFileDialog</class>
+<widget>
+    <class>QDialog</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>LoadingFileDialog</cstring>
+    </property>
+    <property>
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>528</width>
+            <height>140</height>
+        </rect>
+    </property>
+    <property>
+        <name>caption</name>
+        <string>Loading tracefile...</string>
+    </property>
+    <widget>
+        <class>QLabel</class>
+        <property stdset="1">
+            <name>name</name>
+            <cstring>TextLabel1</cstring>
+        </property>
+        <property>
+            <name>geometry</name>
+            <rect>
+                <x>110</x>
+                <y>20</y>
+                <width>271</width>
+                <height>41</height>
+            </rect>
+        </property>
+        <property>
+            <name>frameShape</name>
+            <enum>NoFrame</enum>
+        </property>
+        <property>
+            <name>frameShadow</name>
+            <enum>Raised</enum>
+        </property>
+        <property>
+            <name>text</name>
+            <string>Loading tracefile, please wait...</string>
+        </property>
+        <property>
+            <name>textFormat</name>
+            <enum>RichText</enum>
+        </property>
+        <property>
+            <name>alignment</name>
+            <set>AlignCenter</set>
+        </property>
+        <property>
+            <name>hAlign</name>
+        </property>
+        <property>
+            <name>vAlign</name>
+        </property>
+    </widget>
+    <widget>
+        <class>QProgressBar</class>
+        <property stdset="1">
+            <name>name</name>
+            <cstring>pBar</cstring>
+        </property>
+        <property>
+            <name>geometry</name>
+            <rect>
+                <x>80</x>
+                <y>80</y>
+                <width>380</width>
+                <height>40</height>
+            </rect>
+        </property>
+    </widget>
+</widget>
+</UI>

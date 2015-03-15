@@ -1,0 +1,134 @@
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>ErrorDialog</class>
+  <widget class="QDialog" name="Error" >
+    <property name="geometry" stdset="0" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>298</width>
+        <height>110</height>
+      </rect>
+    </property>
+    <property name="sizePolicy" stdset="0" >
+      <sizepolicy>
+        <hsizetype>1</hsizetype>
+        <vsizetype>1</vsizetype>
+      </sizepolicy>
+    </property>
+    <property name="windowTitle" stdset="0" >
+      <string>Message error</string>
+    </property>
+    <property name="sizeGripEnabled" stdset="0" >
+      <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="Layout1" >
+      <property name="geometry" stdset="0" >
+        <rect>
+          <x>10</x>
+          <y>70</y>
+          <width>310</width>
+          <height>30</height>
+        </rect>
+      </property>
+      <layout class="QHBoxLayout" >
+        <property name="margin" stdset="0" >
+          <number>0</number>
+        </property>
+        <property name="spacing" stdset="0" >
+          <number>6</number>
+        </property>
+        <item>
+          <spacer name="Spacer1" >
+            <property name="sizeHint" >
+              <size>
+                <width>20</width>
+                <height>20</height>
+              </size>
+            </property>
+            <property name="sizeType" >
+              <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+            </property>
+          </spacer>
+        </item>
+        <item>
+          <widget class="QPushButton" name="PushButton1" >
+            <property name="sizePolicy" stdset="0" >
+              <sizepolicy>
+                <hsizetype>5</hsizetype>
+                <vsizetype>5</vsizetype>
+              </sizepolicy>
+            </property>
+            <property name="text" stdset="0" >
+              <string>Accept</string>
+            </property>
+            <property name="default" stdset="0" >
+              <bool>true</bool>
+            </property>
+          </widget>
+        </item>
+        <item>
+          <spacer name="Spacer2" >
+            <property name="sizeHint" >
+              <size>
+                <width>20</width>
+                <height>20</height>
+              </size>
+            </property>
+            <property name="sizeType" >
+              <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+            </property>
+          </spacer>
+        </item>
+      </layout>
+    </widget>
+    <widget class="Q3MultiLineEdit" name="MultiLineEdit1" >
+      <property name="enabled" stdset="0" >
+        <bool>false</bool>
+      </property>
+      <property name="geometry" stdset="0" >
+        <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>311</width>
+          <height>51</height>
+        </rect>
+      </property>
+      <property name="sizePolicy" stdset="0" >
+        <sizepolicy>
+          <hsizetype>7</hsizetype>
+          <vsizetype>7</vsizetype>
+        </sizepolicy>
+      </property>
+      <property name="frameShape" stdset="0" >
+        <enum>Box</enum>
+      </property>
+      <property name="wordWrap" stdset="0" >
+        <enum>WidgetWidth</enum>
+      </property>
+      <property name="wrapColumnOrWidth" stdset="0" >
+        <number>-1</number>
+      </property>
+      <property name="text" stdset="0" >
+        <string>Generic error message</string>
+      </property>
+    </widget>
+  </widget>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <connections>
+    <connection>
+      <sender>PushButton1</sender>
+      <signal>clicked()</signal>
+      <receiver>Error</receiver>
+      <slot>accept()</slot>
+    </connection>
+  </connections>
+</ui>

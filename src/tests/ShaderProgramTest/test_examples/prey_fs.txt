@@ -1,0 +1,32 @@
+!!ARBfp1.0 
+OPTION ARB_precision_hint_fastest;
+
+# texture 0 is _currentRender
+# texture 1 is a normal map that we will use to deform texture 0
+#
+# env[0] is the 1.0 to _currentRender conversion
+# env[1] is the fragment.position to 0.0 - 1.0 conversion
+
+TEMP    localNormal, R0;
+
+PARAM   subOne = { -1, -1, -1, -1 };
+PARAM   scaleTwo = { 2, 2, 2, 2 };
+
+# load the filtered normal map and convert to -1 to 1 range
+TEX             localNormal, fragment.texcoord[1], texture[1], 2D;
+MOV             localNormal.x, localNormal.a;
+MAD             localNormal, localNormal, scaleTwo, subOne;
+
+# calculate the screen texcoord in the 0.0 to 1.0 range
+MUL             R0, fragment.position, program.env[1];
+
+# offset by the scaled localNormal and clamp it to 0.0 - 1.0
+MAD_SAT R0, localNormal, fragment.texcoord[2], R0;
+
+# scale by the screen non-power-of-two-adjust
+MUL             R0, R0, program.env[0];
+
+# load the screen render
+TEX             result.color.xyz, R0, texture[0], 2D;
+
+END

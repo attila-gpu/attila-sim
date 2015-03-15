@@ -1,0 +1,1700 @@
+/**************************************************************************
+ *
+ * Copyright (c) 2002 - 2011 by Computer Architecture Department,
+ * Universitat Politecnica de Catalunya.
+ * All rights reserved.
+ *
+ * The contents of this file may not be disclosed to third parties,
+ * copied or duplicated in any form, in whole or in part, without the
+ * prior permission of the authors, Computer Architecture Department
+ * and Universitat Politecnica de Catalunya.
+ *
+ */
+
+#include "Specific.h"
+#include "SpecificSupport.h"
+#include <algorithm>
+
+#include "GLInterceptor.h"
+#include "GLResolver.h"
+#include <cstdio>
+#include <sstream>
+
+#include <vector>
+#include "includelog.h"
+
+
+#define BUFFER_SIZE 16*1024
+
+using includelog::logfile; // make log object visible
+using namespace std;
+
+const char * unsupportedExtensionsStrings[] = 
+{
+       "GL_ARB_shader_objects ",
+       "GL_ARB_shading_language_100 ",
+       "GL_ATI_separate_stencil"
+};
+
+
+
+HDC GLAPIENTRY wglGetCurrentDC_SPECIFIC()
+{
+    return _JT.wglGetCurrentDC();
+}
+
+HGLRC GLAPIENTRY wglGetCurrentContext_SPECIFIC()
+{
+    return _JT.wglGetCurrentContext();
+}
+
+
+
+void GLAPIENTRY glShaderSourceARB_SPECIFIC(GLhandleARB shaderObj, GLsizei count, 
+                                           const GLcharARB **str, const GLint *length)
+{    
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)str);
+        WRITER.writeMark(",");
+        WRITER.writeAddress((uint)length);
+        return ;
+    }
+
+    panic("Specific", "glShaderSource_SPECIFIC", "glShaderSource not implemented yet");
+    
+    /*
+      BufferObj* strBuf = BufferObj::createBuffer(count, (const void **)str, length);
+      BufferObj* lenBuf = BufferObj::createBuffer(length, sizeof(GLint)*count);
+
+    WRITER.writeBufferID(strBuf->getId());
+    WRITER.writeMark(",");
+    WRITER.writeBufferID(lenBuf->getId());
+    */
+
+
+/*
+
+    char temp[BUFFER_SIZE];
+    // LOG param 3 
+    WRITER.writeMark("{");
+    for ( int i = 0; i < count; i++ )
+    {
+        WRITER.writeMark("\"");
+        if ( length == NULL || length[i] <= 0 )
+        {
+            WRITER.write(str[i]);
+        }
+        else
+        {    
+            // not null terminated, size specified
+            strncpy(temp, str[i], length[i]);
+            temp[length[i]] = '\0';
+            WRITER.write(temp);
+        }
+
+        WRITER.writeMark("\"");
+        
+        if ( i < count - 1 )
+            WRITER.writeMark(",");
+    }
+    WRITER.writeMark("},");
+
+    // LOG param 4
+    if ( length != NULL )
+        WRITER.write(length, count);
+    else
+        WRITER.write((GLuint)0); // null pointer 
+
+    */
+}
+
+GLvoid* GLAPIENTRY glMapBufferARB_SPECIFIC(GLenum target, GLenum access)
+{    
+    CHECKCALL(glMapBufferARB);
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        // resolve call if needed
+        return DO_REAL_CALL(glMapBufferARB(target,access));
+    }    
+
+    //WRITER.write("\nEntering glMapBufferARB_SPECIFIC\n");
+    if ( target != GL_ARRAY_BUFFER && target != GL_ELEMENT_ARRAY_BUFFER )
+    {
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Panic,"Panic: Specific.cpp -> glMapBufferARB_SPECIFIC :  Unknown target [Exiting...]\n");
+        logfile().popInfo();
+        panic("Specific.cpp", "glMapBufferARB_SPECIFIC", "Unknown target");
+        return 0;
+    }
+    
+    // select target
+    BufferObjectStruct& bos = (target == GL_ARRAY_BUFFER ? boArray : boElementArray);
+
+    if ( bos.currentBind != bos.dataBind )
+    {
+        // Solution: Insert a glBufferData call to create a new buffer
+        // Unmap will use this contents to synchronize the internal buffer
+
+        map<GLuint,BufferObjectStruct::BindInfo>::const_iterator it = bos.binds.find(bos.currentBind);
+        if ( it == bos.binds.end() )
+        {
+            logfile().pushInfo(__FILE__,__FUNCTION__);
+            logfile().write(includelog::Panic, "Panic. Specific.cpp -> glMapBufferARB_SPECIFIC : bind -> map : without previous data associated [Exiting...]\n");
+            logfile().popInfo();
+            panic("Specific", "glMapBufferARB_SPECIFIC", "bind -> map : without previous data associated");
+            return 0;
+        }
+
+        // generate an synthetic call to glBufferDataARB
+        WRITER.writeComment("GLInterceptor call used for creating a new buffer, between bind and map");
+        WRITER.writeAPICall(APICall_glBufferDataARB);
+        WRITER.writeMark("(");
+        WRITER.writeEnum(target);
+        WRITER.writeMark(",");
+        WRITER.write(it->second.size); // write size
+        WRITER.writeMark(",");
+        //bos.contents = BufferObj::createBuffer(0, it->second.size); // create an unitilized buffer
+        bos.contents = BM.createDeferred(it->second.size); // create an unitilized buffer
+        WRITER.writeBufferID(bos.contents->getID());
+        WRITER.writeMark(",");
+        WRITER.writeEnum(it->second.usage);
+        WRITER.writeMark(")\n");
+        WRITER.writeComment("End of call generated by GLInterceptor");
+
+        //panic("Specific.cpp", "glMapBufferARB_SPECIFIC", "Unsupported: Bind between glBufferData and this call");
+        //return 0;
+    }
+
+
+    bos.mappedAddr = DO_REAL_CALL(glMapBufferARB(target,access));
+
+    return bos.mappedAddr;
+}
+
+GLboolean GLAPIENTRY glUnmapBufferARB_SPECIFIC(GLenum target)
+{
+    if ( !LOG_BUFFERS_MACRO )
+        return true; // dummy
+
+    if ( target != GL_ARRAY_BUFFER && target != GL_ELEMENT_ARRAY_BUFFER )
+    {
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Panic, "Panic. Specific.cpp -> glUnmapBufferARB_SPECIFIC : Unknown target\n");
+        logfile().popInfo();
+        panic("Specific.cpp", "glMapBufferARB_SPECIFIC", "Unknown target");
+        return 0;
+    }
+
+    // select target
+    BufferObjectStruct& bos = (target == GL_ARRAY_BUFFER ? boArray : boElementArray);
+
+    if ( bos.currentBind != bos.dataBind )
+    {
+        map<GLuint,BufferObjectStruct::BindInfo>::const_iterator it = bos.binds.find(bos.currentBind);
+        if ( it == bos.binds.end() )
+        {
+            logfile().pushInfo(__FILE__,__FUNCTION__);
+            logfile().write(includelog::Panic, "Panic. Specific.cpp -> glUnmapBufferARB_SPECIFIC :  bind -> unmap : without previous data associated\n");
+            logfile().popInfo();
+            panic("Specific", "glMapBufferARB_SPECIFIC", "bind -> unmap : without previous data associated");
+            return false;
+        }
+        // else (synchronize, no problem :-) )
+        // bos has a new BufferObj and mappedAddr is updated
+    }
+
+    // synchronize data
+    //bos.contents->write(bos.mappedAddr, bos.contents->size());
+    BM.setMemory(bos.contents, (const BPtr)bos.mappedAddr, bos.contents->getSize());
+    return true;
+}
+
+void GLAPIENTRY glBindBufferARB_SPECIFIC(GLenum target, GLuint buffer)
+{    
+    if ( !LOG_BUFFERS_MACRO )
+        return ;
+
+    if ( target != GL_ARRAY_BUFFER && target != GL_ELEMENT_ARRAY_BUFFER )
+    {
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Panic, "Unknown target");
+        logfile().popInfo();
+        panic("Specific.cpp", "glBindBufferARB_SPECIFIC", "Unknown target");
+    }
+
+    BufferObjectStruct& bos = (target == GL_ARRAY_BUFFER ? boArray : boElementArray);
+    bos.currentBind = buffer;        
+}
+
+void GLAPIENTRY glGenBuffersARB_SPECIFIC(GLsizei n, GLuint *buffers)
+{
+    WRITER.write(buffers, n);
+}
+
+void GLAPIENTRY glDeleteBuffersARB_SPECIFIC( GLsizei n, const GLuint *buffers)
+{
+    WRITER.write(buffers, n);
+}
+
+
+void GLAPIENTRY glBufferDataARB_SPECIFIC(GLenum target, GLsizeiptrARB size, const GLvoid *data, GLenum usage)
+{
+    static int state = 0;
+    
+    if ( state == 0 )
+    {
+        if ( LOG_BUFFERS_MACRO )
+        {
+            if ( data == 0 )
+                WRITER.writeComment("GLInterceptor note: Third parameter (data pointer) of next call (glBufferDataARB) is NULL");
+        }
+        state = 1; // change state
+        return ;
+    }
+    else if ( state == 1 )
+        state = 0; // reset state for next call to glBufferDataARB()
+
+    WRITER.write((GLuint)size);
+    WRITER.writeMark(",");
+
+    if ( LOG_BUFFERS_MACRO )
+    {        
+        if ( target != GL_ARRAY_BUFFER && target != GL_ELEMENT_ARRAY_BUFFER )
+        {
+            logfile().pushInfo(__FILE__,__FUNCTION__);
+            logfile().write(includelog::Panic, "Unknown target");
+            logfile().popInfo();
+            panic("Specific", "glBufferDataARB_SPECIFIC", "Unknown target");
+        }
+
+        BufferObjectStruct& bos = (target == GL_ARRAY_BUFFER ? boArray : boElementArray);
+        
+        if ( bos.isBound() ) // check if Buffer Object is enabled with this target
+        {
+            bos.contents = BM.create((const BPtr)data, (GLuint)size); // data can be null
+            WRITER.writeBufferID(bos.contents->getID());
+
+            // update bos
+            bos.dataBind = bos.currentBind;
+            //bos.addr = (GLvoid *)data; // can be null
+            
+            BufferObjectStruct::BindInfo bi;
+            bi.size = GLsizei(size);
+            bi.target = target;
+            bi.usage = usage;
+            bos.binds.insert(make_pair(bos.dataBind, bi));
+        }
+        else
+        {
+            logfile().pushInfo(__FILE__,__FUNCTION__);
+            logfile().write(includelog::Panic, "Previous bind expected");
+            logfile().popInfo();
+            panic("Specific", "glBufferDataARB_SPECIFIC", "Previous bind expected");
+        }
+    }
+    else
+    {
+        WRITER.writeAddress((uint)data);
+    }
+    WRITER.writeMark(",");    
+    
+}
+
+void GLAPIENTRY glBufferSubDataARB_SPECIFIC(GLenum target, GLintptrARB offset, 
+                                            GLsizeiptrARB size, const GLvoid * data)
+{
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)data);
+        return ;
+    }
+
+    if ( data == 0 )
+    {
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Panic, "Null pointer not expected");
+        logfile().popInfo();
+        panic("Specific.cpp", "glBufferSubDataARB_SPECIFIC", "Null pointer not expected");
+    }
+    //BufferObj* bo = BufferObj::createBuffer(data, size);
+    //WRITER.writeBufferID(bo->getId());
+    BufferDescriptor* bd = BM.create((const BPtr)data, (GLuint)size);
+    WRITER.writeBufferID(bd->getID());
+}
+
+
+void GLAPIENTRY glCompressedTexImage2DARB_SPECIFIC(GLenum target, GLint level, GLenum iFmt, GLsizei width, 
+                                                 GLsizei height, GLint border, GLsizei imageSize, 
+                                                 const GLvoid * data)
+{
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)data);
+        return ;
+    }
+    //BufferObj* bo = BufferObj::createBuffer(data, imageSize);
+    //WRITER.writeBufferID(bo->getId());
+    BufferDescriptor* bd = BM.create((const BPtr)data, imageSize);
+    WRITER.writeBufferID(bd->getID());
+}
+
+void GLAPIENTRY glCompressedTexImage2D_SPECIFIC(GLenum target, GLint level, GLenum iFmt, GLsizei width, 
+                                                 GLsizei height, GLint border, GLsizei imageSize, 
+                                                 const GLvoid * data)
+{
+    glCompressedTexImage2DARB_SPECIFIC(target, level, iFmt, width, height, border, imageSize, data);
+}
+
+void GLAPIENTRY glCompressedTexSubImage2DARB_SPECIFIC(GLenum target, GLint level, GLint xoffset, GLint yoffset,
+                                                      GLsizei width, GLsizei height, GLenum format, GLsizei imageSize,
+                                                      const GLvoid *data)
+{
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)data);
+        return ;
+    }
+    //BufferObj* bo = BufferObj::createBuffer(data, imageSize);
+    //WRITER.writeBufferID(bo->getId());
+    BufferDescriptor* bd = BM.create((const BPtr)data, imageSize);
+    WRITER.writeBufferID(bd->getID());
+}
+
+void GLAPIENTRY glReadPixels_SPECIFIC( GLint x, GLint y, GLsizei width, GLsizei height,
+                                    GLenum format, GLenum type, GLvoid *pixels )
+{
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)pixels);
+        return ;
+    }
+    //BufferObj* bo = BufferObj::createBuffer(pixels, getTypeSize(type)*width*height);
+    BufferDescriptor* bd = BM.create((const BPtr)pixels, getTypeSize(type)*width*height);
+    WRITER.writeBufferID(bd->getID());
+}
+
+void GLAPIENTRY glSetFragmentShaderConstantATI_SPECIFIC(GLuint dst, const GLfloat * value)
+{
+    WRITER.write(value,4);
+}
+
+
+
+void GLAPIENTRY glVertexPointer_SPECIFIC( GLint size, GLenum type, GLsizei stride, const GLvoid *ptr )
+{
+    pointerArrayCall("glVertexPointer()",VERTEX, size, type, stride, ptr);
+}
+
+void GLAPIENTRY glColorPointer_SPECIFIC( GLint size, GLenum type, GLsizei stride, const GLvoid *ptr )
+{
+    pointerArrayCall("glColorPointer()",COLOR,size, type, stride, ptr);
+}
+
+void GLAPIENTRY glNormalPointer_SPECIFIC(GLenum type, GLsizei stride, const GLvoid *ptr)
+{
+    pointerArrayCall("glNormalPointer()",NORMAL, 3, type, stride, ptr);
+}
+
+
+void GLAPIENTRY glVertexAttribPointerARB_SPECIFIC(GLuint index, GLint size, GLenum type, 
+                                                GLboolean normalized, GLsizei stride, 
+                                                const GLvoid *ptr)
+{
+    if ( index >= 16 )
+    {
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Panic, "Index too high");
+        logfile().popInfo();
+        panic("Specific.cpp", "glVertexAttribPointerARB_SPECIFIC", "Index too high");
+    }
+
+    PointerStruct& ps = genericPointer[index];
+
+    ps.size = size;
+    ps.type = type;
+    ps.stride = stride;
+    ps.normalized = normalized;
+
+    if ( boArray.isBound() )
+    {
+        /* it is merely an offset */
+        ps.bufferBound = true;
+        WRITER.write((unsigned int)ptr);
+        return ;
+    }
+
+    ps.bufferBound = false;
+
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)ptr);
+        return ;
+    }
+
+    if ( ps.enabled && ps.buf != NULL )
+    {
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Warning, "Warning. Modifying enabled pointer (glVertexAttribPointerARB)\n");
+        logfile().popInfo();
+    }
+
+    //ps.buf = BufferObj::createBuffer(ptr, 0);
+    ps.buf = BM.createDeferred((const BPtr)ptr);
+    WRITER.writeBufferID(ps.buf->getID());
+}
+
+
+void GLAPIENTRY glClientActiveTextureARB_SPECIFIC( GLenum texture )
+{
+    GLuint tex = (texture - GL_TEXTURE0) + TEXTURE_COORD;
+    if ( tex > TEXTURE_COORD_MAX )
+    {
+        stringstream ss;
+        ss << "Texture " << GLResolver::getConstantName(texture) << " not supported by GLI";
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Panic, ss.str());
+        logfile().popInfo();
+        panic("Specific.cpp", "glClientActiveTextureARB_SPECIFIC",
+            ss.str().c_str());
+    }
+
+    clientActiveTexture = tex;
+}
+
+void GLAPIENTRY glTexCoordPointer_SPECIFIC(GLint size, GLenum type, GLsizei stride, const GLvoid *ptr)
+{
+    pointerArrayCall("glTexCoordPointer()",(PointerTag)clientActiveTexture, size, type, stride, ptr);
+}
+
+
+// glInterleavedArrays(GL_T2F_V3F,0,U0x269208400)
+
+void GLAPIENTRY glInterleavedArrays_SPECIFIC(GLenum format, GLsizei stride,const GLvoid *ptr )
+{
+    const GLint f = sizeof(GLfloat);
+    switch ( format )
+    {
+        case GL_C4F_N3F_V3F:
+            if ( !LOG_BUFFERS_MACRO )
+            {
+                WRITER.writeAddress((uint)ptr);
+                return ;
+            }
+            interleavedArrayCall(COLOR, 4, GL_FLOAT, 10*f, ptr, 0);
+            interleavedArrayCall(NORMAL, 3, GL_FLOAT, 10*f, ptr, 4*f);
+            interleavedArrayCall(VERTEX, 3, GL_FLOAT, 10*f, ptr, 7*f);
+            WRITER.writeBufferID(arrayPointer[COLOR].buf->getID());
+            break;
+        case GL_T2F_V3F:
+            if ( !LOG_BUFFERS_MACRO )
+            {
+                WRITER.writeAddress((uint)ptr);
+                return ;
+            }
+            interleavedArrayCall(TEXTURE_COORD, 2, GL_FLOAT, 5*f, ptr, 0);
+            interleavedArrayCall(VERTEX, 3, GL_FLOAT, 5*f, ptr, 2*f);
+            WRITER.writeBufferID(arrayPointer[TEXTURE_COORD].buf->getID());
+            break;
+        default:
+            WRITER.writeUnknown(arrayPointer);
+            return ;
+    }
+}
+
+void GLAPIENTRY glDrawArrays_SPECIFIC( GLenum mode, GLint first, GLsizei count )
+{
+    if ( !LOG_BUFFERS_MACRO )
+        return ; // do not stored buffers in buffer files
+
+    configureVertexArrays(0, count);    
+}
+
+
+void GLAPIENTRY glDrawRangeElements_SPECIFIC(GLenum mode, GLuint start, GLuint end, GLsizei count, GLenum type, const GLvoid *indices)
+{
+    // same required code that glDrawElements
+    glDrawElements_SPECIFIC(mode, count, type, indices);
+}
+
+void GLAPIENTRY glDrawElements_SPECIFIC( GLenum mode, GLsizei count, GLenum type, const GLvoid *indices )
+{   
+    // state 0: used to generate extra glXXXPointer calls
+    // state 1: used to generate (and store) data buffers and the index buffer
+    static GLuint state = 0;
+    
+    if ( state == 0 )
+    {
+        if ( !boElementArray.isBound() )
+        {
+            int maxIndex = findMaxIndex(count, type, indices);
+            generateExtraArrayPointers(maxIndex+1);
+        }
+        state = 1;
+        return ;
+    }
+
+    state = 0;
+
+    //logfile().pushInfo(__FILE__,__FUNCTION__);
+    //logfile().write(includelog::Debug, "Specific draw elements state == 1\n");
+    //logfile().popInfo();
+
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        if ( !boElementArray.isBound() )
+        {
+            WRITER.writeAddress((uint)indices);            
+        }
+        return ;
+    }
+
+    // Combinations supported (for now)
+    // GL_ARRAY_BUFFER unbound (==0) && GL_ELEMENT_ARRAY_BUFFER unbound(==0)
+    // GL_ARRAY_BUFFER bound (!=0) && GL_ELEMENT_ARRAY_BUFFER unbound(==0)
+    // GL_ARRAY_BUFFER bound (!=0) && GL_ELEMENT_ARRAY_BUFFER bound(!=0)
+    
+    // Combination NOT supported
+    // GL_ARRAY_BUFFER unbound (==0) && GL_ELEMENT_ARRAY_BUFFER bound(!=0)
+    // Requires to access to Buffer Object contents. It will be implemented in the future, for now, panic :-)
+
+    if ( boElementArray.isBound() ) // Elements bound && data bound
+    {
+        // invariant: If we are here, boArray.enabled() must be true
+        // check invariant:
+        int i;
+        for ( i = 0; i < MAX_POINTERS; i++ )
+        {
+            if ( arrayPointer[i].enabled && !arrayPointer[i].bufferBound )
+            {
+                logfile().pushInfo(__FILE__,__FUNCTION__);
+                logfile().write(includelog::Panic,"Panic. glDrawElements_SPECIFIC -> GL_ELEMENT_ARRAY bound & GL_ARRAY unbound not supported\n");
+                logfile().popInfo();
+                panic("Specific", "glDrawElements_SPECIFIC", "GL_ELEMENT_ARRAY bound & GL_ARRAY unbound not supported");
+                return ;
+            }
+        }
+        for ( i = 0; i < MAX_GENERIC_POINTERS; i++ )
+        {
+            if ( genericPointer[i].enabled && !genericPointer[i].bufferBound )
+            {
+                logfile().pushInfo(__FILE__,__FUNCTION__);
+                logfile().write(includelog::Panic, "Panic. glDrawElements_SPECIFIC -> GL_ELEMENT_ARRAY bound & GL_ARRAY unbound not supported (2)\n");
+                logfile().popInfo();
+                panic("Specific", "glDrawElements_SPECIFIC", "GL_ELEMENT_ARRAY bound & GL_ARRAY unbound not supported (2)");
+                return ;
+            }
+        }
+        //logfile().pushInfo(__FILE__,__FUNCTION__);
+        //logfile().write(includelog::Debug, "Writing indices buffer as UINT\n");
+        //logfile().popInfo();
+        WRITER.write((uint)indices); // merely an offset
+        return ; // bye
+    }
+    else // Elements not bound
+    {
+        /* Compute maximum index within 'indices' array */
+        /* todo: IF BUFFER OF INDICES IS CREATED IN A VERTEX 
+           BUFFER OBJECT MAX INDEX MUST BE FOUND THERE */
+        int maxIndex = findMaxIndex(count, type, indices); 
+
+        /**    
+         * Configure & mix buffers (if required)
+         */
+        int configuredVertexArrays = configureVertexArrays(0, maxIndex+1);
+    }
+
+    if ( prevIndices.type != type || !prevIndices.indices->equals((const BPtr)indices,count*getTypeSize(type) ))
+    {
+        
+        // New index of buffers
+        prevIndices.indices = BM.create((const BPtr)indices, count*getTypeSize(type));
+        prevIndices.type = type;
+    }
+    WRITER.writeBufferID(prevIndices.indices->getID());
+}
+
+
+PROC GLAPIENTRY wglGetProcAddress_SPECIFIC(const char* name )
+{
+    static int state = 0; /* used to have 3 different behaviours */
+    
+    static PROC resultCopy = NULL;
+    
+    int index;
+    PROC result;
+    
+    switch ( state )
+    {
+        /*
+         * State that performs a real call to original OpenGL function
+         * and updates JumpTable with the extension found
+         */
+        case 0: 
+            
+#if !defined(STATS_ONLY_MODE) && !defined(WRAP_ONLY_MODE) /* ifdef change state */
+            
+            state = 1; // new state
+#endif
+   
+            result = DO_REAL_CALL(wglGetProcAddress(name));
+
+            if ( result == NULL )
+            {
+                stringstream ss;
+                ss << "Warning. wglGetProcAddress(). Opengl driver does not support the call: " << name << "\n";
+                logfile().pushInfo(__FILE__,__FUNCTION__);
+                logfile().write(includelog::Warning, ss.str() );
+                logfile().popInfo();
+                if ( !GLInterceptor::isHackMode() )
+                    return NULL;
+            }
+            
+            /*
+             * else ( result != NULL || GLInterceptor::isHackMode() )
+             * if result == NULL second condition forces wglProcAddress to
+             * support the call
+             */
+            index = GLResolver::getFunctionID(name);
+
+            if ( index == APICall_UNDECLARED )
+            {
+                stringstream ss;
+                ss << "wglGetProcAddres(). Function " << name << " not supported by GLInterceptor (function won't be traced)\n";
+                logfile().pushInfo(__FILE__,__FUNCTION__);
+                logfile().write(includelog::Warning, ss.str());
+                logfile().popInfo();
+                
+                /* Return pointer to original extension function ( not wrapper function ) */
+                /* Function won't be traced */
+                return result; 
+            }
+            
+            /* store original extension function ( pointer ) in JT table for further use */
+            /* In hackmode store NULL if call is not supported */
+            ((unsigned long *)(&_JT))[index] = (unsigned long)result; 
+        
+            /* 
+             * Do not return pointer to original, return pointer to wrapper function 
+             * With this method extensions can be traced like the another functions
+             */
+            result = (PROC)(((unsigned long*)(&_JTW))[index]);
+
+
+            resultCopy = result;
+    
+            return result;    
+        
+        case 1: /* state used for logging the parameter correcty (as a string) */
+            state = 2;
+            WRITER.writeMark("\"");
+            WRITER.write(name); // write as string
+            WRITER.writeMark("\"");
+            break;
+        case 2:
+            state = 0;
+            if ( resultCopy != NULL )
+                WRITER.writeResult("FOUND!");
+            else
+                WRITER.writeResult("NULL");
+    }
+            
+    return NULL; // dummy
+}
+
+
+void GLAPIENTRY glMultMatrixd_SPECIFIC( const GLdouble *m )
+{
+    WRITER.write(m, 16);
+}
+
+void GLAPIENTRY glMultMatrixf_SPECIFIC( const GLfloat *m )
+{
+    WRITER.write(m, 16);
+}
+
+void GLAPIENTRY glLoadMatrixf_SPECIFIC(const GLfloat *m)
+{
+    WRITER.write(m,16);
+}
+
+void GLAPIENTRY glLoadMatrixd_SPECIFIC(const GLdouble *m)
+{
+    WRITER.write(m,16);
+}
+
+void GLAPIENTRY glTexImage2D_SPECIFIC( GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *pixels )
+{
+    // NOTE: Pixel alignment should be considered 
+    //GLint alig;    
+
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)pixels);
+        return ;
+    }
+
+    int pixelSize = getPixelFormatSize(format) * getPixelTypeSize(type);
+    int bufferSize = width * height * pixelSize;
+
+    BufferDescriptor* buffer = BM.create((const BPtr)pixels, bufferSize);
+    WRITER.writeBufferID(buffer->getID());
+}
+
+void GLAPIENTRY glTexImage3D_SPECIFIC( GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels )
+{
+    // NOTE: Pixel alignment should be considered 
+    //GLint alig;    
+
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)pixels);
+        return ;
+    }
+
+    int pixelSize = getPixelFormatSize(format) * getPixelTypeSize(type);
+    int bufferSize = width * height * depth * pixelSize;
+
+    BufferDescriptor* buffer = BM.create((const BPtr)pixels, bufferSize);
+    WRITER.writeBufferID(buffer->getID());
+}
+
+
+void GLAPIENTRY glGetTexLevelParameteriv_SPECIFIC( GLenum target, GLint level, GLenum pname,
+                                                   GLint *params )
+{
+    switch ( pname )
+    {
+        case GL_TEXTURE_WIDTH:
+        case GL_TEXTURE_HEIGHT:
+        case GL_TEXTURE_DEPTH:
+        case GL_TEXTURE_INTERNAL_FORMAT:
+        case GL_TEXTURE_BORDER:
+        case GL_TEXTURE_RED_SIZE:
+        case GL_TEXTURE_GREEN_SIZE:
+        case GL_TEXTURE_BLUE_SIZE:
+        case GL_TEXTURE_ALPHA_SIZE:
+        case GL_TEXTURE_LUMINANCE_SIZE:
+        case GL_TEXTURE_INTENSITY_SIZE:
+            WRITER.write(params, 1);
+            return ;
+        default:
+        {
+            stringstream ss;
+            ss << "Unexpected pname value: " << GLResolver::getConstantName(pname);
+            logfile().pushInfo(__FILE__,__FUNCTION__);
+            logfile().write(includelog::Panic, ss.str());
+            logfile().popInfo();
+            panic("Specific", "glGetTexLevelParameteriv_SPECIFIC", ss.str().c_str());
+        }
+    }
+}
+
+
+void GLAPIENTRY glGenTextures_SPECIFIC(GLsizei n, GLuint *textures)
+{
+    // textures is a output parameter
+    // As real opengl function is called before call this SPECIFC 
+    // the parameters returned in textures var will be logged correctly
+    // That is with the result returned by opengl glGenTextures real call
+    WRITER.write(textures, n);
+}
+
+void GLAPIENTRY glDeleteTextures_SPECIFIC( GLsizei n, const GLuint *textures)
+{
+    WRITER.write(textures, n);
+}
+
+void GLAPIENTRY glFogfv_SPECIFIC(GLenum pname, const GLfloat *params)
+{
+    // log second parameter
+    if ( pname == GL_FOG_COLOR )
+        WRITER.write(params,4);
+    else 
+        WRITER.write(params,1);
+}
+
+void GLAPIENTRY glFogiv_SPECIFIC( GLenum pname, const GLint *params )
+{
+    if ( pname == GL_FOG_COLOR )
+        WRITER.write(params,4);
+    else
+        WRITER.write(params,1);
+}
+
+void GLAPIENTRY glLightfv_SPECIFIC(GLenum light, GLenum pname, const GLfloat *params)
+{
+    // log parameters 3
+    if ( pname == GL_AMBIENT || pname == GL_DIFFUSE || pname == GL_SPECULAR || pname == GL_POSITION )
+        WRITER.write(params, 4);
+    else if ( pname == GL_SPOT_DIRECTION )
+        WRITER.write(params, 3);
+    else
+        WRITER.write(params, 1);
+}
+
+void GLAPIENTRY glMaterialfv_SPECIFIC( GLenum face, GLenum pname, const GLfloat *params )
+{
+    switch ( pname )
+    {
+        case GL_AMBIENT:
+        case GL_DIFFUSE:
+        case GL_AMBIENT_AND_DIFFUSE:
+        case GL_SPECULAR:
+        case GL_EMISSION:
+            WRITER.write(params,4);
+            break;
+        case GL_SHININESS:
+            WRITER.write(params,1);
+            break;
+        case GL_COLOR_INDEXES:
+            WRITER.write(params,3);                
+    }
+}
+
+void GLAPIENTRY glLightModelfv_SPECIFIC( GLenum pname, const GLfloat *params )
+{
+    if ( pname == GL_LIGHT_MODEL_AMBIENT )
+        WRITER.write(params,4);
+    else
+        WRITER.write(params,1);
+}
+
+
+void GLAPIENTRY glTexGenfv_SPECIFIC( GLenum coord, GLenum pname, const GLfloat *params )
+{
+    switch (pname)
+    {
+        case GL_OBJECT_PLANE:
+            WRITER.write(params, 4);
+            break;
+        case GL_EYE_PLANE:
+            WRITER.write(params, 4);
+            break;
+        default:
+            logfile().pushInfo(__FILE__,__FUNCTION__);
+            logfile().write(includelog::Panic, "Unexpected parameter");
+            logfile().popInfo();
+            panic("Specific", "glTexEnvfv_SPECIFIC", "Unexpected parameter");
+    }
+}
+
+void GLAPIENTRY glTexEnvfv_SPECIFIC( GLenum target, GLenum pname, const GLfloat *params )
+{
+    switch ( target )
+    {
+        case GL_POINT_SPRITE_ARB:            
+            switch ( pname )
+            {
+                case GL_POINT_SIZE_MIN:
+                case GL_POINT_SIZE_MAX:
+                case GL_POINT_FADE_THRESHOLD_SIZE:
+                case GL_COORD_REPLACE_ARB:                
+                    WRITER.write(params, 1);
+                    break;
+                case GL_POINT_DISTANCE_ATTENUATION:
+                    WRITER.write(params, 3);
+                    break;
+                default:
+                    logfile().pushInfo(__FILE__,__FUNCTION__);
+                    logfile().write(includelog::Panic, "Unexpected parameter");
+                    logfile().popInfo();
+                    panic("Specific", "glTexEnvfv_SPECIFIC", "Unexpected parameter");
+            }
+        case GL_TEXTURE_ENV:
+            switch ( pname )
+            {
+                case GL_TEXTURE_ENV_MODE:
+                    WRITER.write(params, 1);
+                    break;
+                case GL_TEXTURE_ENV_COLOR:
+                    WRITER.write(params, 4);
+                    break;
+                case GL_COMBINE_RGB:
+                case GL_COMBINE_ALPHA:
+                    WRITER.write(params, 2);
+                    break;
+                default:
+                    logfile().pushInfo(__FILE__,__FUNCTION__);
+                    logfile().write(includelog::Panic, "Unexpected parameters");
+                    logfile().popInfo();
+                    panic("Specific", "glTexEnvfv_SPECIFIC", "Unexpected parameter");
+            }
+            break;
+        case GL_TEXTURE_FILTER_CONTROL:
+            if ( pname == GL_TEXTURE_LOD_BIAS )
+                WRITER.write(params,1);
+            else
+            {
+                logfile().pushInfo(__FILE__,__FUNCTION__);
+                logfile().write(includelog::Panic, "Unexpected parameter");
+                logfile().popInfo();
+                panic("Specific", "glTexEnvfv_SPECIFIC", "Unexpected parameter");
+            }
+
+            break;
+        default:
+            panic("Specific", "glTexEnvfv_SPECIFIC", "Unexpected target");
+
+    }
+}
+
+void GLAPIENTRY glTexParameterfv_SPECIFIC( GLenum target, GLenum pname,
+                                          const GLfloat *params )
+{
+    if ( pname == GL_TEXTURE_BORDER_COLOR )
+        WRITER.write(params, 4);
+    else
+        WRITER.write(params, 1);
+}
+
+
+void GLAPIENTRY glTexSubImage2D_SPECIFIC( GLenum target, GLint level, GLint xoffset, GLint yoffset,
+                                       GLsizei width, GLsizei height, GLenum format, GLenum type,
+                                       const GLvoid *pixels )
+{
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)pixels);
+        return ;
+    }
+    //BufferObj* bo = BufferObj::createBuffer(pixels, height*width*getTypeSize(type)*getPixelFormatSize(format));
+    uint sz = height*width*getTypeSize(type)*getPixelFormatSize(format);
+    BufferDescriptor* bd = BM.create((const BPtr)pixels, sz);
+    WRITER.writeBufferID(bd->getID());
+}
+
+
+const GLubyte * GLAPIENTRY glGetString_SPECIFIC( GLenum name )
+{    
+    // HACK!
+    static GLubyte * allExtensions = ( GLubyte * )
+        "GL_ARB_multitexture GL_EXT_multitexture GL_ARB_transpose_matrix GL_EXT_transpose_matrix GL_ARB_multisample GL_EXT_multisample GL_ARB_texture_env_add GL_EXT_texture_env_add "
+        "GL_ARB_texture_cube_map GL_EXT_texture_cube_map GL_ARB_texture_compression GL_EXT_texture_compression GL_ARB_texture_border_clamp GL_EXT_texture_border_clamp "
+        "GL_ARB_point_parameters GL_EXT_point_parameters GL_ARB_vertex_blend GL_EXT_vertex_blend GL_ARB_matrix_palette GL_EXT_matrix_palette "
+        "GL_ARB_texture_env_combine GL_EXT_texture_env_combine GL_ARB_texture_env_crossbar GL_EXT_texture_env_crossbar GL_ARB_texture_env_dot3 GL_EXT_texture_env_dot3 "
+        "GL_ARB_texture_mirrored_repeat GL_EXT_texture_mirrored_repeat GL_ARB_depth_texture GL_EXT_depth_texture GL_ARB_shadow GL_EXT_shadow "
+        "GL_ARB_shadow_ambient GL_EXT_shadow_ambient GL_ARB_window_pos GL_EXT_window_pos GL_ARB_vertex_program GL_EXT_vertex_program GL_ARB_fragment_program GL_EXT_fragment_program "
+        "GL_ARB_vertex_buffer_object GL_EXT_vertex_buffer_object GL_ARB_occlusion_query GL_EXT_occlusion_query GL_ARB_shader_objects GL_EXT_shader_objects "
+        "GL_ARB_vertex_shader GL_EXT_vertex_shader GL_ARB_fragment_shader GL_EXT_fragment_shader GL_ARB_shading_language_100 GL_EXT_shading_language_100 "
+        "GL_ARB_texture_non_power_of_two GL_EXT_texture_non_power_of_two GL_ARB_point_sprite GL_EXT_point_sprite GL_ARB_fragment_program_shadow GL_EXT_fragment_program_shadow "
+        "GL_EXT_abgr GL_EXT_blend_color GL_EXT_polygon_offset GL_EXT_texture GL_EXT_texture3D GL_SGIS_texture_filter4 GL_EXT_subtexture GL_EXT_copy_texture "
+        "GL_EXT_histogram GL_EXT_convolution GL_SGI_color_matrix GL_SGI_color_table GL_SGIS_pixel_texture GL_SGIS_texture4D GL_SGI_texture_color_table "
+        "GL_EXT_cmyka GL_EXT_texture_object GL_SGIS_detail_texture GL_SGIS_sharpen_texture GL_EXT_packed_pixels GL_SGIS_texture_lod GL_SGIS_multisample "
+        "GL_EXT_rescale_normal GL_EXT_vertex_array GL_EXT_misc_attribute GL_SGIS_generate_mipmap GL_SGIX_clipmap GL_SGIX_shadow GL_SGIS_texture_edge_clamp "
+        "GL_SGIS_texture_border_clamp GL_EXT_blend_minmax GL_EXT_blend_subtract GL_EXT_blend_logic_op GL_SGIX_interlace GL_SGIS_texture_select "
+        "GL_SGIX_sprite GL_SGIX_texture_multi_buffer GL_EXT_point_parameters GL_SGIX_instruments GL_SGIX_texture_scale_bias GL_SGIX_framezoom "
+        "GL_SGIX_tag_sample_buffer GL_SGIX_reference_plane GL_SGIX_flush_raster GL_SGIX_depth_texture GL_SGIS_fog_function GL_SGIX_fog_offset "
+        "GL_HP_image_transform GL_HP_convolution_border_modes GL_SGIX_texture_add_env GL_EXT_color_subtable GL_PGI_vertex_hints GL_PGI_misc_hints "
+        "GL_EXT_paletted_texture GL_EXT_clip_volume_hint GL_SGIX_list_priority GL_SGIX_ir_instrument1 GL_SGIX_texture_lod_bias GL_SGIX_shadow_ambient "
+        "GL_EXT_index_texture GL_EXT_index_material GL_EXT_index_func GL_EXT_index_array_formats GL_EXT_compiled_vertex_array GL_EXT_cull_vertex "
+        "GL_SGIX_ycrcb GL_EXT_fragment_lighting GL_IBM_rasterpos_clip GL_HP_texture_lighting GL_EXT_draw_range_elements GL_WIN_phong_shading "
+        "GL_WIN_specular_fog GL_EXT_light_texture GL_SGIX_blend_alpha_minmax GL_EXT_scene_marker GL_SGIX_pixel_texture_bits GL_EXT_bgra GL_SGIX_async "
+        "GL_SGIX_async_pixel GL_SGIX_async_histogram GL_INTEL_texture_scissor GL_INTEL_parallel_arrays GL_HP_occlusion_test GL_EXT_pixel_transform "
+        "GL_EXT_pixel_transform_color_table GL_EXT_shared_texture_palette GL_EXT_separate_specular_color GL_EXT_secondary_color GL_EXT_texture_env "
+        "GL_EXT_texture_perturb_normal GL_EXT_multi_draw_arrays GL_EXT_fog_coord GL_REND_screen_coordinates GL_EXT_coordinate_frame GL_EXT_texture_env_combine "
+        "GL_APPLE_specular_vector GL_SGIX_pixel_texture GL_APPLE_transform_hint GL_SUNX_constant_data GL_SUN_global_alpha GL_SUN_triangle_list "
+        "GL_SUN_vertex GL_EXT_blend_func_separate GL_INGR_color_clamp GL_INGR_interlace_read GL_EXT_stencil_wrap GL_EXT_422_pixels GL_NV_texgen_reflection "
+        "GL_SGIX_texture_range GL_SUN_convolution_border_modes GL_EXT_texture_env_add GL_EXT_texture_lod_bias GL_EXT_texture_filter_anisotropic "
+        "GL_EXT_vertex_weighting GL_NV_light_max_exponent GL_NV_vertex_array_range GL_NV_register_combiners GL_NV_fog_distance GL_NV_texgen_emboss "
+        "GL_NV_blend_square GL_NV_texture_env_combine4 GL_MESA_resize_buffers GL_MESA_window_pos GL_EXT_texture_compression_s3tc GL_IBM_cull_vertex "
+        "GL_IBM_multimode_draw_arrays GL_IBM_vertex_array_lists GL_3DFX_texture_compression_FXT1 GL_3DFX_multisample GL_3DFX_tbuffer GL_SGIX_vertex_preclip "
+        "GL_SGIX_resample GL_SGIS_texture_color_mask GL_EXT_texture_env_dot3 GL_ATI_texture_mirror_once GL_NV_fence GL_IBM_static_data GL_IBM_texture_mirrored_repeat "
+        "GL_NV_evaluators GL_NV_packed_depth_stencil GL_NV_register_combiners2 GL_NV_texture_compression_vtc GL_NV_texture_rectangle GL_NV_texture_shader "
+        "GL_NV_texture_shader2 GL_NV_vertex_array_range2 GL_NV_vertex_program GL_SGIX_texture_coordinate_clamp GL_OML_interlace GL_OML_subsample "
+        "GL_OML_resample GL_NV_copy_depth_to_color GL_ATI_envmap_bumpmap GL_ATI_fragment_shader GL_ATI_pn_triangles GL_ATI_vertex_array_object "
+        "GL_EXT_vertex_shader GL_ATI_vertex_streams GL_ATI_element_array GL_SUN_mesh_array GL_SUN_slice_accum GL_NV_multisample_filter_hint "
+        "GL_NV_depth_clamp GL_NV_occlusion_query GL_NV_point_sprite GL_NV_texture_shader3 GL_NV_vertex_program1_1 GL_EXT_shadow_funcs GL_EXT_stencil_two_side "
+        "GL_ATI_text_fragment_shader GL_APPLE_client_storage GL_APPLE_element_array GL_APPLE_fence GL_APPLE_vertex_array_object GL_APPLE_vertex_array_range "
+        "GL_APPLE_ycbcr_422 GL_S3_s3tc GL_ATI_draw_buffers GL_ATI_texture_env_combine3 GL_ATI_texture_float GL_NV_float_buffer GL_NV_fragment_program "
+        "GL_NV_half_float GL_NV_pixel_data_range GL_NV_primitive_restart GL_NV_texture_expand_normal GL_NV_vertex_program2 GL_ATI_map_object_buffer "
+        "GL_ATI_separate_stencil GL_ATI_vertex_attrib_array_object GL_OES_byte_coordinates GL_OES_fixed_point GL_OES_single_precision GL_OES_compressed_paletted_texture "
+        "GL_OES_read_format GL_OES_query_matrix GL_EXT_depth_bounds_test GL_EXT_texture_mirror_clamp GL_EXT_blend_equation_separate GL_MESA_pack_invert "
+        "GL_MESA_ycbcr_texture GL_EXT_static_vertex_array GL_EXT_vertex_array_set GL_EXT_vertex_array_setXXX GL_SGIX_fog_texture GL_SGIX_fragment_specular_lighting ";
+
+    const GLubyte *result;
+    static string resultString;
+    if ( GLInterceptor::isHackMode() && name == GL_EXTENSIONS )
+        resultString = (const char *)allExtensions;
+    else
+        resultString = (const char *)DO_REAL_CALL(glGetString(name));
+
+    unsigned int foundPosition;
+    unsigned int sizeString;
+    unsigned int numUnsupported = sizeof(unsupportedExtensionsStrings)/sizeof(unsupportedExtensionsStrings[0]);
+    
+    for (int i=0; i < numUnsupported; i++)    
+    {
+        foundPosition = resultString.find(unsupportedExtensionsStrings[i]);
+        sizeString = strlen(unsupportedExtensionsStrings[i]);
+        if (foundPosition != string::npos)
+            resultString.erase(foundPosition, sizeString );
+    }
+    
+    result = (const GLubyte *)resultString.c_str();
+
+    WRITER.writeAPICall(APICall_glGetString);
+    WRITER.writeMark("(");
+    WRITER.writeEnum(name);    
+    WRITER.writeMark(")=");
+
+    if ( GLInterceptor::isReturnTraced() )
+    {
+        WRITER.writeMark("\"");
+        if ( result != NULL )
+            WRITER.writeResult((const char*)result);    
+
+        WRITER.writeMark("\"\n");
+
+    }
+    else
+        WRITER.writeResult("NOT TRACED\n");
+    return result;
+}
+
+
+int GLAPIENTRY wglSwapBuffers_SPECIFIC(HDC hdc)
+{
+    //static int frame = 0;
+    static int lastFrame = GLInterceptor::getLastFrame();
+    static int state = 0;
+
+    if ( state == 0 )
+    {
+        state = 1;
+    }
+    else 
+    {
+        int frame = GLInterceptor::getFrame();
+
+        //char cstr[256];
+        //sprintf(cstr, "Current frame: %d", frame);
+        //TextOut(hdc, 10,10,cstr, strlen(cstr));
+
+        GLInterceptor::incFrame();
+        
+        if ( frame > lastFrame && lastFrame != -1 )
+            return 0;
+
+        char buf[256];
+        sprintf(buf, "Frame %d drawn", GLInterceptor::getFrame());
+
+        WRITER.writeMark("\n");
+        WRITER.writeComment(buf);
+        state = 0;
+    }
+
+    // @note If start frame is grater than '1'. TraceWriter mode is set to TW_MODE::devNull by
+    // GLInterceptor. GLInterceptor stores previous mode before setMode to devNull
+    // This method return the original previous mode
+    /*
+    static TraceWriter::TW_MODE prevMode = GLInterceptor::getInitialTWMode();
+    
+    static int first = GLInterceptor::getFirstFrame();
+    static int last = GLInterceptor::getLastFrame();
+    static bool logEnabled = true;
+
+    LOG(3, Log::log() << "Drawing frame " << frame << "\n";)
+    frame++;
+        
+    // 0 means infinite
+    if ( frame < first || (frame > last && last != 0)) 
+    {
+        if ( logEnabled )
+            WRITER.setMode(WRITER.devNull); // disable logging
+        logEnabled = false;
+        return 0; // dummy
+    }
+
+    if ( !logEnabled )
+    {
+        // reset partial counters
+        WRITER.setMode(prevMode);
+        logEnabled = true;
+    }
+    */
+    
+    return 0; // dummy
+}
+
+const char * GLAPIENTRY wglGetExtensionsStringARB_SPECIFIC(HDC _p0)
+{
+    const char* result;
+    static string resultString(DO_REAL_CALL(wglGetExtensionsStringARB(_p0)));
+
+    unsigned int foundPosition;
+    unsigned int sizeString;
+    unsigned int numUnsupported = sizeof(unsupportedExtensionsStrings)/sizeof(unsupportedExtensionsStrings[0]);       
+
+    for (int i=0; i < numUnsupported; i++)
+    {
+        foundPosition = resultString.find(unsupportedExtensionsStrings[i]);
+        sizeString = strlen(unsupportedExtensionsStrings[i]);
+        if (foundPosition != string::npos)
+            resultString.erase(foundPosition, sizeString );
+    }
+    result = resultString.c_str();
+    WRITER.writeAPICall(APICall_wglGetExtensionsStringARB);
+    WRITER.writeMark("(");
+    WRITER.writeUnknown(&_p0);
+    WRITER.writeMark(")=");
+
+    if ( GLInterceptor::isReturnTraced() )
+    {
+        WRITER.writeMark("\"");
+        WRITER.writeResult(result);
+        WRITER.writeMark("\"\n");
+    }
+    else
+        WRITER.writeResult("NOT TRACED\n");
+    return result;
+}
+
+int GLAPIENTRY wglChoosePixelFormat_SPECIFIC(HDC hdc, const PIXELFORMATDESCRIPTOR *ppfd)
+{    
+    if ( ppfd == 0 )
+    {
+        WRITER.write(0);
+        return 0;
+    }
+
+    unsigned int ppfdSize = (*ppfd).nSize;
+
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)ppfd);
+        return 0;
+    }
+
+    //BufferObj* bo = BufferObj::createBuffer(ppfd, ppfdSize);
+    BufferDescriptor* bd = BM.create((const BPtr)ppfd, ppfdSize);
+    WRITER.writeBufferID(bd->getID());
+
+    return 0;
+}
+
+int GLAPIENTRY wglSetPixelFormat_SPECIFIC(HDC hdc, int iPixelFormat, const PIXELFORMATDESCRIPTOR *ppfd)
+{
+/*
+    static ofstream pfs("pixelFormatsFound.txt");
+
+
+    struct GL_ENUM_PAIR
+    {
+        char *name;
+        int   tag;
+    };
+
+    static const GL_ENUM_PAIR PFD_flags_list[] =
+    {
+        { "PFD_DOUBLEBUFFER",                    PFD_DOUBLEBUFFER},
+        { "PFD_STEREO",                            PFD_STEREO},
+        { "PFD_DRAW_TO_WINDOW",                    PFD_DRAW_TO_WINDOW},
+        { "PFD_DRAW_TO_BITMAP",                    PFD_DRAW_TO_BITMAP},
+        { "PFD_SUPPORT_GDI",                    PFD_SUPPORT_GDI},
+        { "PFD_SUPPORT_OPENGL",                    PFD_SUPPORT_OPENGL},
+        { "PFD_GENERIC_FORMAT",                    PFD_GENERIC_FORMAT},
+        { "PFD_NEED_PALETTE",                    PFD_NEED_PALETTE},
+        { "PFD_NEED_SYSTEM_PALETTE",            PFD_NEED_SYSTEM_PALETTE},
+        { "PFD_SWAP_EXCHANGE",                    PFD_SWAP_EXCHANGE},
+        { "PFD_SWAP_COPY",                        PFD_SWAP_COPY},
+        { "PFD_SWAP_LAYER_BUFFERS",                PFD_SWAP_LAYER_BUFFERS},
+        { "PFD_GENERIC_ACCELERATED",            PFD_GENERIC_ACCELERATED},
+        { "PFD_DEPTH_DONTCARE",                    PFD_DEPTH_DONTCARE},
+        { "PFD_DOUBLEBUFFER_DONTCARE",            PFD_DOUBLEBUFFER_DONTCARE},
+        { "PFD_STEREO_DONTCARE",                PFD_STEREO_DONTCARE}
+    };
+    */
+
+    if ( ppfd == 0 )
+    {
+        WRITER.write(0);
+        return 0;
+    }
+/*
+    if ( !pfs )
+        panic("Specific.cpp", "wglSetPixelFormat_SPECIFIC", "File is not open");
+
+    #define ARY_CNT(x) (int)(sizeof((x)) / sizeof((x)[0]))
+/*
+    char text[4096];
+    char temp[4096] = "";
+    sprintf(text, "     WORD  nSize = 0x%X\n"
+                  "     WORD  nVersion = 0x%X\n"
+                  "     DWORD dwFlags = "
+                  , ppfd->nSize, 
+                  ppfd->nVersion);
+
+    GLboolean first = GL_TRUE;
+                
+    for (int j=0;j<ARY_CNT(PFD_flags_list);j++)
+    {
+        if ((PFD_flags_list[j].tag&ppfd->dwFlags) != 0)
+        {
+            if (first == GL_FALSE)
+            {
+                strcat(text, " | ");
+            }
+            else
+            {
+                first = GL_FALSE;
+            }
+            strcat(text, PFD_flags_list[j].name);
+        }
+    }
+    strcat(text, "\n");
+
+    sprintf(temp, "     BYTE  iPixelType = %s\n",ppfd->iPixelType==(BYTE)PFD_TYPE_RGBA  ? "PFD_TYPE_RGBA" : "PFD_TYPE_COLORINDEX"); 
+    strcat(text, temp);
+    sprintf(temp, "     BYTE  cColorBits = %d\n",            ppfd->cColorBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cRedBits = %d\n",        ppfd->cRedBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cRedShift = %d\n",ppfd->cRedShift); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cGreenBits = %d\n",ppfd->cGreenBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cGreenShift = %d\n",ppfd->cGreenShift); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cBlueBits = %d\n",ppfd->cBlueBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cBlueShift = %d\n",ppfd->cBlueShift); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cAlphaBits = %d\n",ppfd->cAlphaBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cAlphaShift = %d\n",ppfd->cAlphaShift); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cAccumBits = %d\n",ppfd->cAccumBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cAccumRedBits = %d\n",ppfd->cAccumRedBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cAccumGreenBits = %d\n",ppfd->cAccumGreenBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cAccumBlueBits = %d\n",ppfd->cAccumBlueBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cAccumAlphaBits = %d\n",ppfd->cAccumAlphaBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cDepthBits = %d\n",ppfd->cDepthBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cStencilBits = %d\n",ppfd->cStencilBits); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  cAuxBuffers = %d\n",ppfd->cAuxBuffers); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  iLayerType = 0x%X\n",ppfd->iLayerType); 
+    strcat(text, temp);
+    sprintf(temp,"     BYTE  bReserved = 0x%X\n",ppfd->bReserved); 
+    strcat(text, temp);
+    sprintf(temp,"     DWORD dwLayerMask = 0x%X\n",ppfd->dwLayerMask); 
+    strcat(text, temp);
+    sprintf(temp,"     DWORD dwVisibleMask = 0x%X\n",ppfd->dwVisibleMask); 
+    strcat(text, temp);
+    sprintf(temp,"     DWORD dwDamageMask = 0x%X\n",ppfd->dwDamageMask);
+    strcat(text, temp);
+
+*/
+/*
+
+#define PFDTOKEN "pfd"
+
+    char text[4096];
+    char temp[4096] = "";
+    sprintf(text, PFDTOKEN ".nSize = 0x%X;\n"
+                  PFDTOKEN ".nVersion = 0x%X;\n"
+                  PFDTOKEN ".dwFlags = "
+                  , ppfd->nSize, 
+                  ppfd->nVersion);
+
+    GLboolean first = GL_TRUE;
+                
+    for (int j=0;j<ARY_CNT(PFD_flags_list);j++)
+    {
+        if ((PFD_flags_list[j].tag&ppfd->dwFlags) != 0)
+        {
+            if (first == GL_FALSE)
+            {
+                strcat(text, " | ");
+            }
+            else
+            {
+                first = GL_FALSE;
+            }
+            strcat(text, PFD_flags_list[j].name);
+        }
+    }
+    strcat(text, ";\n");
+
+    sprintf(temp, PFDTOKEN ".iPixelType = %s;\n",ppfd->iPixelType==(BYTE)PFD_TYPE_RGBA  ? "PFD_TYPE_RGBA" : "PFD_TYPE_COLORINDEX"); 
+    strcat(text, temp);
+    sprintf(temp, PFDTOKEN ".cColorBits = %d;\n",            ppfd->cColorBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cRedBits = %d;\n",        ppfd->cRedBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cRedShift = %d;\n",ppfd->cRedShift); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cGreenBits = %d;\n",ppfd->cGreenBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cGreenShift = %d;\n",ppfd->cGreenShift); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cBlueBits = %d;\n",ppfd->cBlueBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cBlueShift = %d;\n",ppfd->cBlueShift); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cAlphaBits = %d;\n",ppfd->cAlphaBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cAlphaShift = %d;\n",ppfd->cAlphaShift); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cAccumBits = %d;\n",ppfd->cAccumBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cAccumRedBits = %d;\n",ppfd->cAccumRedBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cAccumGreenBits = %d;\n",ppfd->cAccumGreenBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cAccumBlueBits = %d;\n",ppfd->cAccumBlueBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cAccumAlphaBits = %d;\n",ppfd->cAccumAlphaBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cDepthBits = %d;\n",ppfd->cDepthBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cStencilBits = %d;\n",ppfd->cStencilBits); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".cAuxBuffers = %d;\n",ppfd->cAuxBuffers); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".iLayerType = 0x%X;\n",ppfd->iLayerType); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".bReserved = 0x%X;\n",ppfd->bReserved); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".dwLayerMask = 0x%X;\n",ppfd->dwLayerMask); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".dwVisibleMask = 0x%X;\n",ppfd->dwVisibleMask); 
+    strcat(text, temp);
+    sprintf(temp,PFDTOKEN ".dwDamageMask = 0x%X;\n",ppfd->dwDamageMask);
+    strcat(text, temp);
+
+
+    pfs << text << endl;
+
+    #undef ARY_CNT
+    ///////////////////
+*/
+    
+    unsigned int ppfdSize = (*ppfd).nSize;
+
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)ppfd);
+        return 0;
+    }
+
+    //BufferObj* bo = BufferObj::createBuffer(ppfd, ppfdSize);
+    BufferDescriptor* bd = BM.create((BPtr)ppfd, ppfdSize);
+    WRITER.writeBufferID(bd->getID());
+
+    return 0;
+}
+
+
+
+void GLAPIENTRY glEnable_SPECIFIC(GLenum cap)
+{
+    if ( cap == GL_VERTEX_PROGRAM_ARB )
+        vertexProgramEnabled = true;
+}
+
+void GLAPIENTRY glDisable_SPECIFIC(GLenum cap)
+{
+    if ( cap == GL_VERTEX_PROGRAM_ARB )
+        vertexProgramEnabled = false;
+    else if ( cap == GL_TEXTURE_2D )
+        arrayPointer[clientActiveTexture].enabled = false;
+}
+
+
+void GLAPIENTRY glEnableVertexAttribArrayARB_SPECIFIC(GLuint index)
+{
+    if ( index >= 16 )
+    {
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Panic, "Index too high (greater than 15)");
+        logfile().popInfo();
+        panic("Specific", "glEnableVertexAttribArrayARB_SPECIFIC", "Index too high");
+    }
+    genericPointer[index].enabled = true;
+}
+
+
+void GLAPIENTRY glDisableVertexAttribArrayARB_SPECIFIC(GLuint index)
+{
+    if ( index >= 16 )
+    {
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Panic, "Index too high (greater than 15)");
+        logfile().popInfo();
+        panic("Specific", "glDisableVertexAttribArrayARB_SPECIFIC", "Index too high");
+    }
+    genericPointer[index].enabled = false;
+}
+
+
+void GLAPIENTRY glEnableClientState_SPECIFIC(GLenum cap)
+{
+    switch ( cap )
+    {
+        case GL_VERTEX_ARRAY:            
+            arrayPointer[VERTEX].enabled = true;
+            break;
+        case GL_COLOR_ARRAY:
+            arrayPointer[COLOR].enabled = true;
+            break;
+        case GL_INDEX_ARRAY:
+            arrayPointer[INDEX].enabled = true;
+            break;
+        case GL_NORMAL_ARRAY:
+            arrayPointer[NORMAL].enabled = true;
+            break;
+        case GL_TEXTURE_COORD_ARRAY:
+            arrayPointer[clientActiveTexture].enabled = true;
+            break;
+        case GL_EDGE_FLAG_ARRAY:
+            arrayPointer[EDGE_FLAG].enabled = true;
+            break;
+        default:
+        {
+            stringstream ss;
+            ss << "Warning. glEnableClientState. Unexpected GLenum: " << GLResolver::getConstantName(cap) << "\n";
+            logfile().pushInfo(__FILE__,__FUNCTION__);
+            logfile().write(includelog::Warning, ss.str());
+            logfile().popInfo();
+        }
+    }
+}
+
+void GLAPIENTRY glDisableClientState_SPECIFIC(GLenum cap)
+{
+    switch ( cap )
+    {
+        case GL_VERTEX_ARRAY:
+            arrayPointer[VERTEX].enabled = false;
+            arrayPointer[VERTEX].buf = NULL;
+            break;
+        case GL_COLOR_ARRAY:
+            arrayPointer[COLOR].enabled = false;
+            arrayPointer[COLOR].buf = NULL;
+            break;
+        case GL_INDEX_ARRAY:
+            arrayPointer[INDEX].enabled = false;
+            arrayPointer[INDEX].buf = NULL;
+            break;
+        case GL_NORMAL_ARRAY:
+            arrayPointer[NORMAL].enabled = false;
+            arrayPointer[NORMAL].buf = NULL;
+            break;
+        case GL_TEXTURE_COORD_ARRAY:
+            arrayPointer[clientActiveTexture].enabled = false;
+            arrayPointer[clientActiveTexture].buf = NULL;
+            break;
+        case GL_EDGE_FLAG_ARRAY:
+            arrayPointer[EDGE_FLAG].enabled = false;
+            arrayPointer[EDGE_FLAG].buf = NULL;
+            break;
+        default:
+        {
+            stringstream ss;
+            ss << "glDisableClientState. Unexpected GLenum: " << GLResolver::getConstantName(cap) << "\n";
+            logfile().pushInfo(__FILE__,__FUNCTION__);
+            logfile().write(includelog::Warning, ss.str());
+            logfile().popInfo();
+        }
+    }
+}
+
+
+
+void GLAPIENTRY glLoadProgramNV_SPECIFIC(GLenum _p0, GLuint _p1, GLsizei _p2, const GLubyte *_p3)
+{
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        /* LOG PARAM 3 */
+        WRITER.writeAddress((uint)_p3);
+        return ;
+    }
+
+    WRITER.writeMark("\"");
+    WRITER.write((const char*)_p3);
+    WRITER.writeMark("\"");
+}
+
+
+void GLAPIENTRY glProgramStringARB_SPECIFIC(GLenum target, GLenum format, GLsizei len, const GLvoid *str)
+{        
+    WRITER.writeMark("\"");
+    char temp[BUFFER_SIZE];
+    strncpy(temp, (const char*)str, len);
+    temp[len] = '\0';
+    char* ptr = temp;
+    while ( *ptr != 0 )
+    {
+        if ( *ptr == '"' )
+            *ptr = '#';
+        ptr++;
+    }
+    WRITER.write(temp);
+    WRITER.writeMark("\"");
+}
+
+
+void GLAPIENTRY glGetProgramivARB_SPECIFIC(GLenum, GLenum, GLint *)
+{
+    WRITER.writeMark("\"");
+    WRITER.write("GLInterceptor IGNORED");
+    WRITER.writeMark("\"");
+}
+
+void GLAPIENTRY glGetIntegerv_SPECIFIC( GLenum pname, GLint *params )
+{
+       WRITER.writeMark("\"");
+
+       
+
+       /******************************************************************************************************/
+
+       /* This hack is needed to prevent GL application using more mipmap levels than our simulator supports */
+
+       /******************************************************************************************************/
+
+       if (pname == GL_MAX_TEXTURE_SIZE)
+
+               params[0] = 2048;
+
+       
+
+       WRITER.write("GLInterceptor IGNORED");
+
+       WRITER.writeMark("\"");
+}
+
+void GLAPIENTRY glGetFloatv_SPECIFIC( GLenum pname, GLfloat *params )
+{
+    WRITER.writeMark("\"");
+    WRITER.write("GLInterceptor IGNORED");
+    WRITER.writeMark("\"");
+}
+
+void GLAPIENTRY glGenProgramsARB_SPECIFIC(GLsizei, GLuint *)
+{
+    WRITER.writeMark("\"");
+    WRITER.write("GLInterceptor IGNORED");
+    WRITER.writeMark("\"");
+}
+
+void GLAPIENTRY glGetInfoLogARB_SPECIFIC(GLhandleARB shader, GLsizei bufSize, 
+                                         GLsizei *length, GLcharARB *infoLog)
+{
+    if ( length == NULL )
+        WRITER.write(0);
+    else
+        WRITER.write(*length);
+    WRITER.writeMark(",");
+    WRITER.writeMark("\"");
+    WRITER.write(infoLog);
+    WRITER.writeMark("\"");
+}
+
+void GLAPIENTRY glGetObjectParameterivARB_SPECIFIC(GLhandleARB object, GLenum pname, 
+                                                   GLint *params)
+{
+    WRITER.writeMark("\"");
+    WRITER.write("GLInterceptor IGNORED");
+    WRITER.writeMark("\"");
+}
+
+GLint APIENTRY glGetUniformLocationARB_SPECIFIC(GLhandleARB program, const GLcharARB *name)
+{
+    WRITER.writeMark("\"");
+    WRITER.write("GLInterceptor IGNORED");
+    WRITER.writeMark("\"");
+    return 0; // dummy
+}
+
+void GLAPIENTRY glColorTableEXT_SPECIFIC(GLenum target, GLenum internalformat, GLsizei width, GLenum format, GLenum type, const GLvoid *data)
+{
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint)data);
+        return ;
+    }
+    //BufferObj* bo = BufferObj::createBuffer(data, width*getTypeSize(type)*getPixelFormatSize(format));
+    GLuint sz = width*getTypeSize(type)*getPixelFormatSize(format);
+    BufferDescriptor* bd = BM.create((const BPtr)data, sz);
+    WRITER.writeBufferID(bd->getID());
+}
+
+void GLAPIENTRY glGenQueriesARB_SPECIFIC(GLsizei, GLuint *)
+{
+    WRITER.writeMark("\"");
+    WRITER.write("GLInterceptor IGNORED");
+    WRITER.writeMark("\"");
+}
+
+void GLAPIENTRY glGetQueryObjectivARB_SPECIFIC(GLuint, GLenum, GLint *)
+{
+    WRITER.writeMark("\"");
+    WRITER.write("GLInterceptor IGNORED");
+    WRITER.writeMark("\"");
+}
+
+void GLAPIENTRY glProgramEnvParameters4fvEXT_SPECIFIC(GLenum target, GLuint index, GLsizei count, const GLfloat *params)
+{
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint) params);
+        return ;
+    }
+    
+    uint sz = count * 4 * sizeof(GLfloat);
+    BufferDescriptor* bd = BM.create((const BPtr) params, sz);
+    WRITER.writeBufferID(bd->getID());
+    
+    //WRITER.write(params, 4 * count);   
+} 
+
+void GLAPIENTRY glProgramLocalParameters4fvEXT_SPECIFIC(GLenum target, GLuint index, GLsizei count, const GLfloat *params)
+{
+    if ( !LOG_BUFFERS_MACRO )
+    {
+        WRITER.writeAddress((uint) params);
+        return ;
+    }
+    
+    uint sz = count * 4 * sizeof(GLfloat);
+    BufferDescriptor* bd = BM.create((const BPtr) params, sz);
+    WRITER.writeBufferID(bd->getID());
+
+    //WRITER.write(params, 4 * count);
+} 
+
+int GLAPIENTRY wglMakeCurrent_SPECIFIC(HDC hdc, HGLRC hglrc)
+{
+    // Retrieving Window Client Resolution
+    int _result = DO_REAL_CALL(wglMakeCurrent(hdc,hglrc));
+    if (hdc != 0)
+    {
+        HWND hWnd = WindowFromDC(hdc);
+        RECT lpRect;
+        GetClientRect(hWnd, &lpRect);
+
+        //GLInterceptor::setAppResolution(lpRect.right, lpRect.bottom);
+        WRITER.writeResolution(lpRect.right, lpRect.bottom);
+
+        //GLInterceptor::windowClientWidth = lpRect.right;
+        //GLInterceptor::windowClientHeight = lpRect.bottom;
+        char buffer[80];
+        sprintf(buffer,"Device Context Window Resolution: %d x %d ", lpRect.right, lpRect.bottom);
+        WRITER.writeComment(buffer);
+        logfile().pushInfo(__FILE__,__FUNCTION__);
+        logfile().write(includelog::Init, buffer);
+        logfile().write(includelog::Init, "\n", false);
+        logfile().popInfo();
+    }
+    return _result;
+}
+

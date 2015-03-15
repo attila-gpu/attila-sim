@@ -1,0 +1,209 @@
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>CycleDialog</class>
+  <widget class="QDialog" name="Form1" >
+    <property name="geometry" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>406</width>
+        <height>234</height>
+      </rect>
+    </property>
+    <property name="windowTitle" >
+      <string>Cycle Information</string>
+    </property>
+    <layout class="QVBoxLayout" >
+      <property name="margin" >
+        <number>9</number>
+      </property>
+      <property name="spacing" >
+        <number>1</number>
+      </property>
+      <item>
+        <widget class="Q3ListView" name="ListView1" >
+          <property name="frameShadow" >
+            <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="margin" >
+            <number>4</number>
+          </property>
+          <property name="selectionMode" >
+            <enum>Q3ListView::NoSelection</enum>
+          </property>
+          <property name="itemMargin" >
+            <number>6</number>
+          </property>
+          <property name="rootIsDecorated" >
+            <bool>false</bool>
+          </property>
+          <column>
+            <property name="text" >
+              <string>Type</string>
+            </property>
+            <property name="clickable" >
+              <bool>false</bool>
+            </property>
+            <property name="resizable" >
+              <bool>true</bool>
+            </property>
+          </column>
+          <column>
+            <property name="text" >
+              <string>Value</string>
+            </property>
+            <property name="clickable" >
+              <bool>false</bool>
+            </property>
+            <property name="resizable" >
+              <bool>true</bool>
+            </property>
+          </column>
+          <item>
+            <property name="text" >
+              <string>Cycle</string>
+            </property>
+            <property name="text" >
+              <string/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+          </item>
+          <item>
+            <property name="text" >
+              <string>Signal</string>
+            </property>
+            <property name="text" >
+              <string/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+          </item>
+          <item>
+            <property name="text" >
+              <string>Cookies</string>
+            </property>
+            <property name="text" >
+              <string/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+          </item>
+          <item>
+            <property name="text" >
+              <string>Color ID</string>
+            </property>
+            <property name="text" >
+              <string/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+          </item>
+          <item>
+            <property name="text" >
+              <string>Info</string>
+            </property>
+            <property name="text" >
+              <string/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+            <property name="pixmap" >
+              <pixmap/>
+            </property>
+          </item>
+        </widget>
+      </item>
+      <item>
+        <layout class="QHBoxLayout" >
+          <property name="margin" >
+            <number>0</number>
+          </property>
+          <property name="spacing" >
+            <number>6</number>
+          </property>
+          <item>
+            <spacer name="Spacer1" >
+              <property name="sizeHint" >
+                <size>
+                  <width>20</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="sizeType" >
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QPushButton" name="PushButton1" >
+              <property name="acceptDrops" >
+                <bool>true</bool>
+              </property>
+              <property name="text" >
+                <string>Accept</string>
+              </property>
+              <property name="default" >
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <spacer name="Spacer1_2" >
+              <property name="sizeHint" >
+                <size>
+                  <width>20</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="sizeType" >
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11" />
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <connections>
+    <connection>
+      <sender>PushButton1</sender>
+      <signal>clicked()</signal>
+      <receiver>Form1</receiver>
+      <slot>accept()</slot>
+    </connection>
+    <connection>
+      <sender>ListView1</sender>
+      <signal>onViewport()</signal>
+      <receiver>Form1</receiver>
+      <slot>ListView1_onViewport()</slot>
+    </connection>
+  </connections>
+</ui>

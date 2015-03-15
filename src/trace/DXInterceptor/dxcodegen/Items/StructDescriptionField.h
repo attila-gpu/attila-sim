@@ -1,0 +1,41 @@
+////////////////////////////////////////////////////////////////////////////////
+
+#pragma once
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "Items/SmartPointer.h"
+
+////////////////////////////////////////////////////////////////////////////////
+
+namespace dxcodegen
+{
+  namespace Items
+  {
+    class StructDescriptionField : public SmartPointer
+    {
+    public:
+
+      StructDescriptionField();
+      virtual ~StructDescriptionField();
+      
+      void SetType(const std::string& type);
+      std::string& GetType();
+
+      void SetName(const std::string& name);
+      std::string& GetName();
+
+    protected:
+    
+      std::string m_type;
+      std::string m_name;
+    
+    };
+
+    ////////////////////////////////////////////////////////////////////////////
+    
+    typedef smart_ptr<StructDescriptionField> StructDescriptionFieldPtr;
+
+    ////////////////////////////////////////////////////////////////////////////
+  }
+}

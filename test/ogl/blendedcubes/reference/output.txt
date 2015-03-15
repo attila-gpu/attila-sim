@@ -1,0 +1,206 @@
+Simulator Parameters.
+--------------------
+
+Input File = tracefile.txt.gz
+Signal Trace File = signaltrace.txt
+Statistics File = stats.cycles.csv.gz
+Statistics (Per Frame) File = stats.frames.csv.gz
+Statistics (Per Batch) File = stats.batches.csv.gz
+Simulation Cycles = 0
+Simulation Frames = 1
+Simulation Start Frame = 70
+Signal Trace Dump = disabled
+Signal Trace Start Cycle = 0
+Signal Trace Dump Cycles = 10000
+Statistics Generation = enabled
+Statistics (Per Cycle) Generation = disabled
+Statistics (Per Frame) Generation = enabled
+Statistics (Per Batch) Generation = disabled
+Statistics Rate = 10000
+Dectect Stalls = enabled
+EnableDriverShaderTranslation = true
+VertexAttributeLoadFromShader = false
+VectorALUConfig = simd4+scalar
+OptimizedDynamicMemory => FAST_NEW_DELETE enabled.  Ignoring third bucket!
+Using OpenGL Trace File as simulation input.
+Using Legacy Library.
+Using Memory Controller Version 2...
+Creating LookAheadScheduler: Sched0::LookAheadSched0
+Creating LookAheadScheduler: Sched1::LookAheadSched1
+Creating LookAheadScheduler: Sched2::LookAheadSched2
+Creating LookAheadScheduler: Sched3::LookAheadSched3
+Creating LookAheadScheduler: Sched4::LookAheadSched4
+Creating LookAheadScheduler: Sched5::LookAheadSched5
+Creating LookAheadScheduler: Sched6::LookAheadSched6
+Creating LookAheadScheduler: Sched7::LookAheadSched7
+MemoryController::createUsageSignals OK
+Creating StreamerLoader Unit 0
+Using the Classic Rasterizer Unit.
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Note: The first frame producing output (start frame) is frame 70
+Simulating 1 frames (1 dot : 10K cycles).
+
+TraceDriver: Setting resolution to 384x364
+Frame 0 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 1 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 2 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 3 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 4 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 5 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 6 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 7 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 8 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 9 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 10 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 11 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 12 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 13 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 14 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 15 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 16 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 17 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 18 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 19 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 20 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 21 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 22 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 23 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 24 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 25 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 26 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 27 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 28 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 29 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 30 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 31 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 32 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 33 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 34 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 35 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 36 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 37 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 38 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 39 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 40 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 41 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 42 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 43 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 44 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 45 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 46 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 47 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 48 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 49 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 50 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 51 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 52 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 53 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 54 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 55 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 56 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 57 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 58 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 59 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 60 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 61 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 62 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 63 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 64 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 65 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 66 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 67 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 68 Skipped
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+Frame 69 Skipped
+TraceDriver::nextAGPTransaction() -> Disabling preload...
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+CP => Cycle 286. End of preload phase.  Starting simulation.
+Dumping frame 70
+GPUDriver => Memory usage : GPU 294 blocks | System 0 blocks
+...BCP => Cycle 39227. Lasted 38942 cycles. Frame rendered.
+.DAC => Cycle 43776 Color Buffer Dumped.
+
+END Cycle 43778 ----------------------------
+Bucket 0: Size 262144 Last 398 Max 0 | Bucket 1: Size 32768 Last 0 Max 0 | Bucket 2: Size 65536 Last 0 Max 0
+
+Simulation clock time = 15 seconds
+
+
+End of simulation
+
+

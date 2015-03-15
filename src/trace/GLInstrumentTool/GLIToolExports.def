@@ -1,0 +1,4 @@
+LIBRARY tool.dll
+EXPORTS
+getTool
+releaseTool

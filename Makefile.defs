@@ -1,0 +1,113 @@
+###########################################################################
+# 
+#  Copyright (c) 2002, 2003 by Computer Architecture Department,
+#  Universitat Politecnica de Catalunya.
+#  All rights reserved.
+# 
+#  The contents of this file may not be disclosed to third parties,
+#  copied or duplicated in any form, in whole or in part, without the
+#  prior permission of the authors, Computer Architecture Department
+#  and Universitat Politecnica de Catalunya.
+# 
+#  $RCSfile: Makefile.defs,v $
+#  $Revision: 1.7 $
+#  $Author: christip $
+#  $Date: 2008-02-25 22:32:15 $
+# 
+#  GPU3D framework Makefile definitions. 
+# 
+# 
+
+# Tools 
+
+CC = gcc
+CXX = g++
+LD = ld
+AR = ar
+RANLIB = ranlib
+MAKE = make
+FLEX = flex
+BISON = bison
+TIME = /usr/bin/time -f "Elapsed time %E" 2>&1
+
+# Directories
+
+ifndef TOPDIR
+$(error Makefile must define the variable TOPDIR with a relative reference to the gpu3d directory.)
+endif
+
+BINDIR = $(TOPDIR)/bin
+SRCDIR = $(TOPDIR)/src
+LIBDIR = $(TOPDIR)/lib
+OBJDIR = $(TOPDIR)/obj
+DOCDIR = $(TOPDIR)/doc
+
+GPUDIR = $(SRCDIR)/gpu
+SIMDIR = $(SRCDIR)/sim
+EMUDIR = $(SRCDIR)/emul
+SUPPORTDIR = $(SRCDIR)/support
+SHSIMDIR = $(SRCDIR)/shSim
+BGPUDIR = $(SRCDIR)/bgpu
+TRACEDIR = $(SRCDIR)/trace
+GLDIR = $(SRCDIR)/GL
+
+# Compiler Optimization level by default
+OLEVEL="1"
+
+# VERBOSE compilation flags
+VERBOSE_CXXFLAGS_yes = -DGPU_DEBUG_ON
+
+# CONFIG Optional compilation flags
+CONFIG_CXXFLAGS_debug = -O -g -fno-inline
+CONFIG_CXXFLAGS_profiling = -O$(OLEVEL) -g -pg
+CONFIG_CXXFLAGS_optimized = -O$(OLEVEL) -fomit-frame-pointer -funroll-loops
+
+CONFIG_LDFLAGS_debug = 
+CONFIG_LDFLAGS_profiling =
+CONFIG_LDFLAGS_optimized = -static -static-libgcc
+CONFIG_LDFLAGS_verbose = 
+
+# CPU Optional compilation flags
+CPU_CXXFLAGS_x86 = -march=i386 -m32
+CPU_CXXFLAGS_pentium4 = -march=pentium4 -msse2 -mfpmath=sse -m32
+CPU_CXXFLAGS_athlon = -march=athlon -msse2 -mfpmath=sse
+CPU_CXXFLAGS_core2 = -march=core2 -msse2 -mfpmath=sse
+CPU_CXXFLAGS_xeon = -march=prescott -msse3 -mfpmath=sse
+CPU_CXXFLAGS_x86_64 = -march=nocona -m64
+
+# PLATFORM Optional compilation flags
+PLATFORM_CXXFLAGS_linux = -D _LINUX_ -D GL_GLEXT_LEGACY -D GL_GLEXT_PROTOTYPES
+PLATFORM_CXXFLAGS_cygwin = -D _CYGWIN_ -D GL_GLEXT_LEGACY -D GL_GLEXT_PROTOTYPES
+
+# Default options
+VERBOSE=no
+CONFIG=optimized
+#UNIFIED=yes
+CPU=
+PLATFORM=linux
+
+# Variables exports
+export VERBOSE
+export CONFIG
+#export UNIFIED
+export CPU
+export PLATFORM
+
+# C++ compilation flags
+CXXFLAGS = \
+	$(VERBOSE_CXXFLAGS_$(VERBOSE)) \
+	$(CONFIG_CXXFLAGS_$(CONFIG)) \
+	$(CPU_CXXFLAGS_$(CPU)) \
+	$(PLATFORM_CXXFLAGS_$(PLATFORM)) \
+	$(EXTRA_CXXFLAGS)
+
+# Linker flags
+LDFLAGS = \
+	$(VERBOSE_LDFLAGS_$(VERBOSE)) \
+	$(CONFIG_LDFLAGS_$(CONFIG)) \
+	$(CPU_LDFLAGS_$(CPU)) \
+	$(PLATFORM_LDFLAGS_$(PLATFORM)) \
+	-L$(LIBDIR)
+
+# Library dependences
+LIBS =

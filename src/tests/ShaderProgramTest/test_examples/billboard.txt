@@ -1,0 +1,15 @@
+!!ARBvp1.0
+ADDRESS addr;
+TEMP result1;
+PARAM local[] = { program.local[0..90] };
+PARAM mvp[] = { state.matrix.mvp };
+ARL addr.x, vertex.attrib[1].x;
+MUL result1, local[addr.x + 20], vertex.attrib[1].y;
+ADD result1, result1, vertex.attrib[0];
+DP4 result.position.x, result1, mvp[0];
+DP4 result.position.y, result1, mvp[1];
+DP4 result.position.z, result1, mvp[2];
+DP4 result.position.w, result1, mvp[3];
+MOV result.color, vertex.color;
+MOV result.texcoord.xy, local[addr.x + 24];
+END

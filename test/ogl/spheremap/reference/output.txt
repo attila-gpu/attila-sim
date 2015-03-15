@@ -1,0 +1,64 @@
+Simulator Parameters.
+--------------------
+
+Input File = tracefile.txt.gz
+Signal Trace File = signaltrace.txt
+Statistics File = stats.cycles.csv.gz
+Statistics (Per Frame) File = stats.frames.csv.gz
+Statistics (Per Batch) File = stats.batches.csv.gz
+Simulation Cycles = 0
+Simulation Frames = 1
+Simulation Start Frame = 0
+Signal Trace Dump = disabled
+Signal Trace Start Cycle = 0
+Signal Trace Dump Cycles = 10000
+Statistics Generation = enabled
+Statistics (Per Cycle) Generation = disabled
+Statistics (Per Frame) Generation = enabled
+Statistics (Per Batch) Generation = disabled
+Statistics Rate = 10000
+Dectect Stalls = enabled
+EnableDriverShaderTranslation = true
+VertexAttributeLoadFromShader = false
+VectorALUConfig = simd4+scalar
+OptimizedDynamicMemory => FAST_NEW_DELETE enabled.  Ignoring third bucket!
+Using OpenGL Trace File as simulation input.
+Using Legacy Library.
+Using Memory Controller Version 2...
+Creating LookAheadScheduler: Sched0::LookAheadSched0
+Creating LookAheadScheduler: Sched1::LookAheadSched1
+Creating LookAheadScheduler: Sched2::LookAheadSched2
+Creating LookAheadScheduler: Sched3::LookAheadSched3
+Creating LookAheadScheduler: Sched4::LookAheadSched4
+Creating LookAheadScheduler: Sched5::LookAheadSched5
+Creating LookAheadScheduler: Sched6::LookAheadSched6
+Creating LookAheadScheduler: Sched7::LookAheadSched7
+MemoryController::createUsageSignals OK
+Creating StreamerLoader Unit 0
+Using the Classic Rasterizer Unit.
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Using Vector Shader (Fetch)
+Using Vector Shader (Decode/Execute)
+Simulating 1 frames (1 dot : 10K cycles).
+
+
+Warning: clearZ implemented as clear z and stencil (optimization)
+....BBB.BBBBBBB.BBBBBBB.BBBBBBB.BBBBBBB.BBBDumping frame 0
+GPUDriver => Memory usage : GPU 608 blocks | System 0 blocks
+BCP => Cycle 95878. Lasted 95878 cycles. Frame rendered.
+.DAC => Cycle 105143 Color Buffer Dumped.
+
+END Cycle 105145 ----------------------------
+Bucket 0: Size 262144 Last 478 Max 0 | Bucket 1: Size 32768 Last 0 Max 0 | Bucket 2: Size 65536 Last 0 Max 0
+
+Simulation clock time = 29 seconds
+
+
+End of simulation
+
+

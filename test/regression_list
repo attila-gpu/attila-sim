@@ -1,0 +1,14 @@
+d3d/triangle, bGPU.ini, triangle.PIXRun, 1, 0, 90
+d3d/texture_X8R8G8B8_square, bGPU.ini, texture_X8R8G8B8_square.PIXRun, 1, 0, 90
+d3d/filtering_linear_linear_linear, bGPU.ini, filtering_linear_linear_linear.PIXRun, 1, 0, 70 
+ogl/triangle, bGPU.ini, triangle.txt, 1, 0, 90 
+ogl/spaceship, bGPU.ini, spaceship.txt.gz, 1, 0, 90 
+ogl/torus, bGPU_MSAA4x.ini, torus.txt.gz, 1, 0, 90 
+ogl/bunny, bGPU.ini, tracefile.txt.gz, 1, 0, 50 
+ogl/spheremap, bGPU.ini, tracefile.txt.gz, 1, 0, 70
+ogl/billboard, bGPU.ini, tracefile.txt.gz, 1, 125, 70
+ogl/8lights, bGPU.ini, tracefile.txt.gz, 1, 0, 90
+ogl/micropolygon/0_5_size_1lightVS_200x200, bGPU.ini, tracefile.txt.gz, 1, 1, 50
+ogl/blendedcubes, bGPU.ini, tracefile.txt.gz, 1, 70, 90 
+ogl/copyteximage, bGPU.ini, tracefile.txt.gz, 1, 0, 10
+ogl/simplefog, bGPU.ini, tracefile.txt.gz, 1, 0, 90

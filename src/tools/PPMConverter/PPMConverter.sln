@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PPMConverter", "PPMConverter.vcproj", "{4D43162B-DDE5-4230-829A-EFA39EDBF0A7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PPMInspect", "PPMInspect.vcproj", "{5D6C74D1-506A-4464-9AEE-53B038D52582}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{4D43162B-DDE5-4230-829A-EFA39EDBF0A7}.Debug.ActiveCfg = Debug|Win32
+		{4D43162B-DDE5-4230-829A-EFA39EDBF0A7}.Debug.Build.0 = Debug|Win32
+		{4D43162B-DDE5-4230-829A-EFA39EDBF0A7}.Release.ActiveCfg = Release|Win32
+		{4D43162B-DDE5-4230-829A-EFA39EDBF0A7}.Release.Build.0 = Release|Win32
+		{5D6C74D1-506A-4464-9AEE-53B038D52582}.Debug.ActiveCfg = Debug|Win32
+		{5D6C74D1-506A-4464-9AEE-53B038D52582}.Debug.Build.0 = Debug|Win32
+		{5D6C74D1-506A-4464-9AEE-53B038D52582}.Release.ActiveCfg = Release|Win32
+		{5D6C74D1-506A-4464-9AEE-53B038D52582}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

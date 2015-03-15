@@ -1,0 +1,46 @@
+Formato del fichero "SignalDriverFile.txt":
+
+1ª linea -> BW ( tipo entero no negativo )
+2ª linea -> LATENCIA ( tipo entero no negativo )
+
+Siguientes lineas:
+
+COP[,op1][,op2][,op3]
+
+COP posibles ( códigos de operación ):
+
+W -> write
+ej: ( si se omite el ultimo parámtero se usa la lat max )
+W,1,"WWW",2
+W -> operación write
+1 -> ciclo en el que hacemos el write
+"WWW" -> datos que escribimos
+2 -> latencia de la operación de escritura
+
+R -> read
+ej:
+R,4
+R -> operación read
+4 -> ciclo en el que leemos
+
+D -> DUMP ( sin params )
+
+P -> setParameters
+ej:
+P,2,3
+P -> setParameters ( resetea el signal )
+2 -> nuevo BW
+3 -> nueva LAT
+
+L -> setLatency
+ej
+L,4
+L -> setLatency ( nueva latencia, y tb resetea )
+4 -> nueva latencia
+
+Ídem para B ( bandwidth )
+
+F -> fin del fichero ( lo q haya tras esto y un return se descarta )
+
+
+************* Te adjunto un fichero de ejemplo "SignalDriverFile.txt"
