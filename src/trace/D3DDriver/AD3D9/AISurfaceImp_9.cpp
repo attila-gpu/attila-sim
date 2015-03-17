@@ -18,7 +18,7 @@
 #include "AICubeTextureImp_9.h"
 #include "AISurfaceImp_9.h"
 #include "../D3DControllers/Utils.h"
-
+#include <stdio.h>
 
 #include "GPUMath.h"
 

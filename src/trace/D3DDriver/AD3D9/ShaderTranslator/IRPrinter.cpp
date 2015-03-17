@@ -15,6 +15,7 @@
 #include "IRPrinter.h"
 
 #include <cstring>
+#include <stdio.h>
 
 using namespace std;
 

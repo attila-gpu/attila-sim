@@ -30,7 +30,7 @@
  */
 
 #include "TriangleSetupOutput.h"
-
+#include <stdio.h>
 using namespace gpu3d;
 
 /*  Creates a new TriangleSetupOutput.  */

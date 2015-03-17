@@ -13,6 +13,7 @@
 
 
 #include "IRTranslator.h"
+#include <stdio.h>
 
 using namespace std;
 using namespace gpu3d;

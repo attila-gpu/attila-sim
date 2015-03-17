@@ -25,14 +25,14 @@ OptimizedDynamicMemory => FAST_NEW_DELETE enabled.  Ignoring third bucket!
 Using OpenGL Trace File as simulation input.
 Using Legacy Library.
 Using Memory Controller Version 2...
-Creating LookAheadScheduler: Sched0::LookAheadSched0
-Creating LookAheadScheduler: Sched1::LookAheadSched1
-Creating LookAheadScheduler: Sched2::LookAheadSched2
-Creating LookAheadScheduler: Sched3::LookAheadSched3
-Creating LookAheadScheduler: Sched4::LookAheadSched4
-Creating LookAheadScheduler: Sched5::LookAheadSched5
-Creating LookAheadScheduler: Sched6::LookAheadSched6
-Creating LookAheadScheduler: Sched7::LookAheadSched7
+Creating BankQueueScheduler: Sched0::BankFifoSched0
+Creating BankQueueScheduler: Sched1::BankFifoSched1
+Creating BankQueueScheduler: Sched2::BankFifoSched2
+Creating BankQueueScheduler: Sched3::BankFifoSched3
+Creating BankQueueScheduler: Sched4::BankFifoSched4
+Creating BankQueueScheduler: Sched5::BankFifoSched5
+Creating BankQueueScheduler: Sched6::BankFifoSched6
+Creating BankQueueScheduler: Sched7::BankFifoSched7
 MemoryController::createUsageSignals OK
 Creating StreamerLoader Unit 0
 Using the Classic Rasterizer Unit.
@@ -51,15 +51,15 @@ TraceDriver: Setting resolution to 640x480
 Warning: clearZ implemented as clear z and stencil (optimization)
 
 Warning: clearZ implemented as clear z and stencil (optimization)
-.BB.Dumping frame 0
+.BB..Dumping frame 0
 GPUDriver => Memory usage : GPU 679 blocks | System 0 blocks
-.BCP => Cycle 37756. Lasted 37756 cycles. Frame rendered.
-.DAC => Cycle 46058 Color Buffer Dumped.
+B.CP => Cycle 41189. Lasted 41189 cycles. Frame rendered.
+DAC => Cycle 49493 Color Buffer Dumped.
 
-END Cycle 46060 ----------------------------
-Bucket 0: Size 262144 Last 566 Max 0 | Bucket 1: Size 32768 Last 0 Max 0 | Bucket 2: Size 65536 Last 0 Max 0
+END Cycle 49495 ----------------------------
+Bucket 0: Size 262144 Last 16622 Max 0 | Bucket 1: Size 32768 Last 0 Max 0 | Bucket 2: Size 65536 Last 0 Max 0
 
-Simulation clock time = 11 seconds
+Simulation clock time = 3 seconds
 
 
 End of simulation

@@ -25,14 +25,14 @@ OptimizedDynamicMemory => FAST_NEW_DELETE enabled.  Ignoring third bucket!
 Using OpenGL Trace File as simulation input.
 Using Legacy Library.
 Using Memory Controller Version 2...
-Creating LookAheadScheduler: Sched0::LookAheadSched0
-Creating LookAheadScheduler: Sched1::LookAheadSched1
-Creating LookAheadScheduler: Sched2::LookAheadSched2
-Creating LookAheadScheduler: Sched3::LookAheadSched3
-Creating LookAheadScheduler: Sched4::LookAheadSched4
-Creating LookAheadScheduler: Sched5::LookAheadSched5
-Creating LookAheadScheduler: Sched6::LookAheadSched6
-Creating LookAheadScheduler: Sched7::LookAheadSched7
+Creating BankQueueScheduler: Sched0::BankFifoSched0
+Creating BankQueueScheduler: Sched1::BankFifoSched1
+Creating BankQueueScheduler: Sched2::BankFifoSched2
+Creating BankQueueScheduler: Sched3::BankFifoSched3
+Creating BankQueueScheduler: Sched4::BankFifoSched4
+Creating BankQueueScheduler: Sched5::BankFifoSched5
+Creating BankQueueScheduler: Sched6::BankFifoSched6
+Creating BankQueueScheduler: Sched7::BankFifoSched7
 MemoryController::createUsageSignals OK
 Creating StreamerLoader Unit 0
 Using the Classic Rasterizer Unit.
@@ -48,15 +48,15 @@ Simulating 1 frames (1 dot : 10K cycles).
 
 
 Warning: clearZ implemented as clear z and stencil (optimization)
-BBBBBBBBBBBBBBBBBBBB.BBBBBBBBBBBBBBBBBBBBBB.BBBBBBBBBBBBBBBBBBBBBBBBB.BBBBBBBBBBBDumping frame 0
+BBBBBBBBBBBBBBBBBBB.BBBBBBBBBBBBBBBBBBB.BBBBBBBBBBBBBBBBBBBB.BBBBBBBBBBBBBBBBBBBBDumping frame 0
 GPUDriver => Memory usage : GPU 516 blocks | System 0 blocks
-BBCP => Cycle 35696. Lasted 35696 cycles. Frame rendered.
-.DAC => Cycle 41671 Color Buffer Dumped.
+BBCP => Cycle 39642. Lasted 39642 cycles. Frame rendered.
+.DAC => Cycle 45616 Color Buffer Dumped.
 
-END Cycle 41673 ----------------------------
-Bucket 0: Size 262144 Last 486 Max 0 | Bucket 1: Size 32768 Last 0 Max 0 | Bucket 2: Size 65536 Last 0 Max 0
+END Cycle 45618 ----------------------------
+Bucket 0: Size 262144 Last 16622 Max 0 | Bucket 1: Size 32768 Last 0 Max 0 | Bucket 2: Size 65536 Last 0 Max 0
 
-Simulation clock time = 12 seconds
+Simulation clock time = 3 seconds
 
 
 End of simulation

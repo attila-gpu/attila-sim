@@ -28,8 +28,6 @@ using namespace acdlib;
     #define YYDEBUG 0
 #endif
 
-#define YYPARSE_PARAM irtree
-
 #define APPEND_STR(str,str1)                       { (str).append(str1); }
 #define APPEND_NUMBER_SELECTION(string,number)     { stringstream ss; ss << "[" << number << "]"; (string).append(ss.str()); }
 #define APPEND_ROW_RANGE_SELECTION(string,min,max) { stringstream ss; ss << "[" << min << ".." << max << "]"; (string).append(ss.str()); }
@@ -40,7 +38,7 @@ using namespace acdlib;
 #define CREATE_EMPTY_STRING(str_ptr)               CREATE_STRING(str_ptr, "")
 
 
-void yyerror(char *s)
+void yyerror(void*, char *s)
 {
     panic("ACDXFP1Grammar.y","yyerror()","Sintactic error in Fragment Program");
 }
@@ -100,6 +98,8 @@ list<string*> acdxFp1ASTStringCollector;
  TOK_SCENECOLOR TOK_LIGHTPROD TOK_TEXENV TOK_FOG TOK_PARAMS TOK_DEPTH TOK_RANGE TOK_MATRIX TOK_MODELVIEW TOK_PROJECTION 
  TOK_MVP TOK_PALETTE TOK_INVERSE TOK_TRANSPOSE TOK_INVTRANS TOK_ROW TOK_POINT_POINT TOK_INT_CONST TOK_FLOAT_CONST 
  TOK_IDENT TOK_COMPONENT TOK_1D TOK_2D TOK_3D TOK_CUBE TOK_RECT TOK_END
+
+%parse-param { void* irtree }
 
 %type <irprogram> program ARBFP10_program
 %type <iroption> option

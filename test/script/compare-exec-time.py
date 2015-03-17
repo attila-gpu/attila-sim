@@ -8,7 +8,7 @@ import re
 output = sys.stdout
 
 if len(sys.argv) < 3:
-    print "Usage:", sys.argv[0], "cycle_count_file1", "cycle_count_file2", "[start_frame]"
+    print ("Usage:", sys.argv[0], "cycle_count_file1", "cycle_count_file2", "[start_frame]")
     sys.exit(-1)
 
 cycle_count_file1 = sys.argv[1]
@@ -28,11 +28,11 @@ header_str1 = cycle_count1.readline()[:-1]
 header_str2 = cycle_count2.readline()[:-1]
 
 if header_str1 != 'CycleCounter':
-    print "Not recognized header in " + cycle_count_file1 + ". \'CycleCounter\' was expected." 
+    print("Not recognized header in " + cycle_count_file1 + ". \'CycleCounter\' was expected.")
     sys.exit(-1)
 
 if header_str2 != "CycleCounter":
-    print "Not recognized header in " + cycle_count_file2 + ". \'CycleCounter\' was expected."
+    print("Not recognized header in " + cycle_count_file2 + ". \'CycleCounter\' was expected.")
     sys.exit(-1)
 
 #header_count = len(header_str.split(";")) - 1
@@ -79,9 +79,9 @@ while line1 and line2:
                 equal = 0
 
         if equal:
-            print "[%d] %0.5fx (=) " % (current_frame, 1.0),
+            print("[%d] %0.5fx (=) " % (current_frame, 1.0),)
         else:
-            print "[%d] %0.5fx " % (current_frame, speedup),
+            print("[%d] %0.5fx " % (current_frame, speedup),)
 
     line1 = cycle_count1.readline()
     line2 = cycle_count2.readline()
@@ -89,7 +89,7 @@ while line1 and line2:
     current_frame = current_frame + 1
 
 if line1 != line2:
-    print "Different number of cycle counter rows in " + cycle_count_file1 + " and " + cycle_count_file2 + "."
+    print("Different number of cycle counter rows in " + cycle_count_file1 + " and " + cycle_count_file2 + ".")
     sys.exit(-1)
       
 #    items = (line[:-1]).split(";")

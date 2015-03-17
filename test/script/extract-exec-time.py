@@ -8,7 +8,7 @@ import os.path
 # 1st param: stats-file.csv.gz  [working dir] (optional)
 
 if len(sys.argv) > 4:
-    print "Usage: " + sys.argv[0] + " stats-file.csv.gz [working dir]"
+    print("Usage: " + sys.argv[0] + " stats-file.csv.gz [working dir]")
     sys.exit(0)
 
 inputPath = sys.argv[1]
@@ -36,7 +36,6 @@ temp_file_prev.write(filter_keys_prev)
 temp_file_prev.close()
 
 command = 'zcat ' + inputPath + ' | ' + workdir + 'filter-cols.py - - @' + temp_file_name
-
 os.system(command)
 
 os.remove(temp_file_name_prev)

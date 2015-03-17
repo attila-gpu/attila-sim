@@ -489,6 +489,7 @@ bool WrapperGenerator::generateCode()
     
         f.close();
     }
+
     
     /* note: Mandatory after generate all wrapper calls */
     setOutputDir(oDirGen);

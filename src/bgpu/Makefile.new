@@ -85,7 +85,7 @@ build-all: $(BINDIR)/bGPU-Uni $(BINDIR)/bGPU $(BINDIR)/bGPU-emu
 
 $(BINDIR)/bGPU-Uni: bGPU-Unified.o $(BUILD_OBJECTS) $(PROGRAM_LIBS:%=$(LIBDIR)/%) $(PROGRAM_DEPS)
 	@echo "  BUILD $(notdir $@)"
-	@$(CXX) $(CXXFLAGS) -o $@ bGPU-Unified.o $(BUILD_OBJECTS) $(PROGRAM_LIBS:%=$(LIBDIR)/%) $(LDFLAGS) $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ bGPU-Unified.o $(BUILD_OBJECTS) $(PROGRAM_LIBS:%=$(LIBDIR)/%) $(LDFLAGS) $(LIBS)
 
 $(BINDIR)/bGPU: bGPU.o $(BUILD_OBJECTS) $(PROGRAM_LIBS:%=$(LIBDIR)/%) $(PROGRAM_DEPS)
 	@echo "  BUILD $(notdir $@)" 

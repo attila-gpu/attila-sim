@@ -29,6 +29,7 @@
 
 #include "StreamerControlCommand.h"
 #include "support.h"
+#include <stdio.h>
 
 using namespace gpu3d;
 

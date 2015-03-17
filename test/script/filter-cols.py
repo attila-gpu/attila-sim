@@ -6,8 +6,8 @@ import os
 import re
 
 if len(sys.argv) < 4:
-    print "Usage: " + sys.argv[0] + " input-path output-path @columns-path|regexp [accept(default)|reject]"
-    print "Use '-' instead of input-path to use standard input as input-path, the same for output-path"
+    print("Usage: " + sys.argv[0] + " input-path output-path @columns-path|regexp [accept(default)|reject]")
+    print("Use '-' instead of input-path to use standard input as input-path, the same for output-path")
     sys.exit(0)
 
 
@@ -37,7 +37,7 @@ else:
 selectedCols = []
 
 if columnsPath[0] == '@':
-    selectedColsFile = open(columnsPath[1:len(columnsPath)], 'rb')
+    selectedColsFile = open(columnsPath[1:len(columnsPath)], 'r')
     for line in selectedColsFile:
         line = line.strip()
         if len(line) > 0 and line[0] != '#':

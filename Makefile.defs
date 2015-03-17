@@ -58,13 +58,13 @@ OLEVEL="1"
 VERBOSE_CXXFLAGS_yes = -DGPU_DEBUG_ON
 
 # CONFIG Optional compilation flags
-CONFIG_CXXFLAGS_debug = -O -g -fno-inline
+CONFIG_CXXFLAGS_debug = -g -fno-inline
 CONFIG_CXXFLAGS_profiling = -O$(OLEVEL) -g -pg
 CONFIG_CXXFLAGS_optimized = -O$(OLEVEL) -fomit-frame-pointer -funroll-loops
 
 CONFIG_LDFLAGS_debug = 
 CONFIG_LDFLAGS_profiling =
-CONFIG_LDFLAGS_optimized = -static -static-libgcc
+CONFIG_LDFLAGS_optimized = 
 CONFIG_LDFLAGS_verbose = 
 
 # CPU Optional compilation flags

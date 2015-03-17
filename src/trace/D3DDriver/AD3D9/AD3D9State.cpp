@@ -41,6 +41,7 @@
 #include "Utils.h"
 
 #include <cstring>
+#include <stdio.h>
 
 AD3D9State& AD3D9State::instance()
 {

@@ -128,7 +128,6 @@ void ImageSaver::savePNG(char *filename, u32bit xRes, u32bit yRes, u8bit *data)
     png_infop info_ptr;
     png_byte **row_pointers;
 
-
     png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     info_ptr = png_create_info_struct(png_ptr);
 
@@ -144,7 +143,8 @@ void ImageSaver::savePNG(char *filename, u32bit xRes, u32bit yRes, u8bit *data)
         if (fout == NULL)
             panic("bGPU-emu", "dumpFrame", "Error creating frame color output file.");
     )
-        
+    
+    /*    
     png_init_io(png_ptr, fout);
     png_set_compression_level(png_ptr, 9);
     
@@ -164,7 +164,8 @@ void ImageSaver::savePNG(char *filename, u32bit xRes, u32bit yRes, u8bit *data)
     png_write_image(png_ptr, row_pointers);
     png_write_end(png_ptr, info_ptr);
     png_destroy_write_struct(&png_ptr, &info_ptr);
-
+    */
+    
     free(row_pointers);
 
     fclose(fout);

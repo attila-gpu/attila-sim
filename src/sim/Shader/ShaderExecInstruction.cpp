@@ -21,6 +21,7 @@
 
 #include "ShaderExecInstruction.h"
 #include <cstring>
+#include <stdio.h>
 
 /**
  *

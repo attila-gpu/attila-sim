@@ -25,6 +25,7 @@
  */
 
 #include "FragmentInput.h"
+#include "stdio.h"
 
 using namespace gpu3d;
 

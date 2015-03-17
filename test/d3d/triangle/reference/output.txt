@@ -23,16 +23,16 @@ VertexAttributeLoadFromShader = false
 VectorALUConfig = simd4+scalar
 OptimizedDynamicMemory => FAST_NEW_DELETE enabled.  Ignoring third bucket!
 Using Direct3D Trace File as simulation input.
-Using Legacy Library.
+Using Attila Common Driver (ACD) Library.
 Using Memory Controller Version 2...
-Creating LookAheadScheduler: Sched0::LookAheadSched0
-Creating LookAheadScheduler: Sched1::LookAheadSched1
-Creating LookAheadScheduler: Sched2::LookAheadSched2
-Creating LookAheadScheduler: Sched3::LookAheadSched3
-Creating LookAheadScheduler: Sched4::LookAheadSched4
-Creating LookAheadScheduler: Sched5::LookAheadSched5
-Creating LookAheadScheduler: Sched6::LookAheadSched6
-Creating LookAheadScheduler: Sched7::LookAheadSched7
+Creating BankQueueScheduler: Sched0::BankFifoSched0
+Creating BankQueueScheduler: Sched1::BankFifoSched1
+Creating BankQueueScheduler: Sched2::BankFifoSched2
+Creating BankQueueScheduler: Sched3::BankFifoSched3
+Creating BankQueueScheduler: Sched4::BankFifoSched4
+Creating BankQueueScheduler: Sched5::BankFifoSched5
+Creating BankQueueScheduler: Sched6::BankFifoSched6
+Creating BankQueueScheduler: Sched7::BankFifoSched7
 MemoryController::createUsageSignals OK
 Creating StreamerLoader Unit 0
 Using the Classic Rasterizer Unit.
@@ -46,17 +46,17 @@ Using Vector Shader (Fetch)
 Using Vector Shader (Decode/Execute)
 Simulating 1 frames (1 dot : 10K cycles).
 
-CRenderTargetZStencil9::on_add_node_child => WARNING.  Clear of depth only implemented as clear depth and stencil.
-GPUDriver => Memory usage : GPU 693 blocks | System 0 blocks
+Warning: Clear Z implemented as Clear Z and Stencil (optimization)
+ACDDeviceImp::swapBuffers() - OK
+GPUDriver => Memory usage : GPU 822 blocks | System 0 blocks
 Rendered frame 0
-CRenderTargetZStencil9::on_add_node_child => WARNING.  Clear of depth only implemented as clear depth and stencil.
-.BCP => Cycle 13319. Lasted 13319 cycles. Frame rendered.
-.DAC => Cycle 23860 Color Buffer Dumped.
+BCP => Cycle 9119. Lasted 9119 cycles. Frame rendered.
+.DAC => Cycle 19523 Color Buffer Dumped.
 
-END Cycle 23862 ----------------------------
-Bucket 0: Size 262144 Last 336 Max 0 | Bucket 1: Size 32768 Last 0 Max 0 | Bucket 2: Size 65536 Last 0 Max 0
+END Cycle 19525 ----------------------------
+Bucket 0: Size 262144 Last 16622 Max 0 | Bucket 1: Size 32768 Last 0 Max 0 | Bucket 2: Size 65536 Last 0 Max 0
 
-Simulation clock time = 6 seconds
+Simulation clock time = 2 seconds
 
 
 End of simulation

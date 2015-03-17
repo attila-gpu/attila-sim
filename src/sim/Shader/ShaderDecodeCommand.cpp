@@ -30,6 +30,7 @@
  */
 
 #include "ShaderDecodeCommand.h"
+#include <stdio.h>
 
 using namespace gpu3d;
 
