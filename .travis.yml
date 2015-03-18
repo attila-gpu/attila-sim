@@ -1,6 +1,6 @@
 language: cpp
 
 compiler:
-	- gcc
+   - gcc
 
 script: make all
