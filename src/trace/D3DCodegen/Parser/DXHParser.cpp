@@ -133,13 +133,13 @@ void DXHParser::ReadFileData(const string& filename, string& cadena)
     streampos size = entrada.tellg();
     entrada.seekg(0, ios_base::beg);
 
-    char* buffer = new char[size];
+    char* buffer = new char[(unsigned int)size];
 
-    entrada.read(buffer, size);
+    entrada.read(buffer, (unsigned int)size);
     entrada.close();
 
     cadena.clear();
-    cadena.assign(buffer, size);
+    cadena.assign(buffer, (unsigned int)size);
 
     delete[] buffer;
 }

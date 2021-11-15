@@ -2964,10 +2964,25 @@ void ACDDeviceImp::copyMipmap (ACDTexture* inTexture, acdlib::ACD_CUBEMAP_FACE i
     acd_uint outHeightTexture = adaptedOut.getHeight(inFace, inMipmap);
 
 
-    acdlib::acd_float dataBuffer[] = {  ((outX*2)/outWidthTexture)-1, ((outY)*2)/outHeightTexture-1, 0.f, inX/inWidthTexture, (inY+inHeight)/inHeightTexture,
-                                        (((outX+outWidth)*2)/outWidthTexture)-1, ((outY)*2)/outHeightTexture-1, 0.f, (inX+inWidth)/inWidthTexture, (inY+inHeight)/inHeightTexture,
-                                        (((outX+outWidth)*2)/outWidthTexture)-1, (((outY+outHeight)*2)/outHeightTexture)+1, 0.f, (inX+inWidth)/inWidthTexture, inY/inHeightTexture,
-                                        ((outX*2)/outWidthTexture)-1, (((outY+outHeight)*2)/outHeightTexture+1), 0.f, inX/inWidthTexture, inY/inHeightTexture};
+    acdlib::acd_float dataBuffer[] = {  
+        (acdlib::acd_float)((outX*2)/outWidthTexture)-1,
+        (acdlib::acd_float)((outY)*2)/outHeightTexture-1,
+        0.f, 
+        (acdlib::acd_float)inX/inWidthTexture,
+        (acdlib::acd_float)(inY+inHeight)/inHeightTexture,
+        (acdlib::acd_float)(((outX+outWidth)*2)/outWidthTexture)-1,
+        (acdlib::acd_float)((outY)*2)/outHeightTexture-1,
+        0.f,
+        (acdlib::acd_float)(inX+inWidth)/inWidthTexture,
+        (acdlib::acd_float)(inY+inHeight)/inHeightTexture,
+        (acdlib::acd_float)(((outX+outWidth)*2)/outWidthTexture)-1,
+        (acdlib::acd_float)(((outY+outHeight)*2)/outHeightTexture)+1, 0.f,
+        (acdlib::acd_float)(inX+inWidth)/inWidthTexture,
+        (acdlib::acd_float)inY/inHeightTexture,
+        (acdlib::acd_float)((outX*2)/outWidthTexture)-1,
+        (acdlib::acd_float)(((outY+outHeight)*2)/outHeightTexture+1), 0.f,
+        (acdlib::acd_float)inX/inWidthTexture,
+        (acdlib::acd_float)inY/inHeightTexture};
 
     acdlib::acd_uint indexBuffer[] = {0, 1, 2, 2, 3, 0};
 

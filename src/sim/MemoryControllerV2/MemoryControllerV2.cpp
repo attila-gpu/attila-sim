@@ -1402,7 +1402,7 @@ void MemoryController::updateSystemBuses(u64bit cycle)
                         }
                         break;
                     default:
-                        printf(" MC "U64FMT" >> transaction %p command %d data %d\n",
+                        printf(" MC " U64FMT " >> transaction % p command % d data % d\n",
                             cycle, systemTrans[bus], systemTrans[bus]->getCommand(),
                                *((u32bit *) systemTrans[bus]));
                         panic("MemoryController", "updateSystemBus",

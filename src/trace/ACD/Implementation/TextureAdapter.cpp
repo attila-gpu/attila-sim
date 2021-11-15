@@ -216,6 +216,7 @@ acd_bool TextureAdapter::getMultisampled(ACD_CUBEMAP_FACE face, acd_uint mipmap)
             panic("TextureAdapter", "getMultisampled", "Adapter only supports 2D and CM textures for now");
             return false;
     }
+    return false;
 }
 
 acd_uint TextureAdapter::getSamples(ACD_CUBEMAP_FACE face, acd_uint mipmap) const
@@ -235,6 +236,7 @@ acd_uint TextureAdapter::getSamples(ACD_CUBEMAP_FACE face, acd_uint mipmap) cons
             panic("TextureAdapter", "getSamples", "Adapter only supports 2D and CM textures for now");
             return 0;
     }
+    return 0;
 }
 
 MemoryObjectState TextureAdapter::getState(ACD_CUBEMAP_FACE face, acd_uint mipmap) const
@@ -254,6 +256,7 @@ MemoryObjectState TextureAdapter::getState(ACD_CUBEMAP_FACE face, acd_uint mipma
             panic("TextureAdapter", "getState", "Adapter only supports 2D and CM textures for now");
             return MOS_NotFound;
     }
+    return MOS_NotFound;
 }
 
 acd_bool TextureAdapter::getMultisampling(ACD_CUBEMAP_FACE face, acd_uint mipmap) const
@@ -273,6 +276,7 @@ acd_bool TextureAdapter::getMultisampling(ACD_CUBEMAP_FACE face, acd_uint mipmap
             panic("TextureAdapter", "getState", "Adapter only supports 2D and CM textures for now");
             return false;
     }
+    return false;
 }
 
 acd_uint TextureAdapter::region(ACD_CUBEMAP_FACE face, acd_uint mipmap) const
@@ -292,6 +296,7 @@ acd_uint TextureAdapter::region(ACD_CUBEMAP_FACE face, acd_uint mipmap) const
             panic("TextureAdapter", "region", "Adapter only supports 2D and CM textures for now");
             return 0;
     }
+
 }
 
 void TextureAdapter::updateMipmap(  ACD_CUBEMAP_FACE face, 

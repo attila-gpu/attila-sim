@@ -868,7 +868,7 @@ public:
     {
         // If your compile breaks here, it is because OtherT is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         if( detail::regex_access<IterT>::_do_match( *this, results, ibegin, iend, false ) )
@@ -890,7 +890,7 @@ public:
     {
         // If your compile breaks here, it is because CharT* is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<CharT*,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<CharT*,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         if( detail::regex_access<IterT>::_do_match_c( *this, results, szbegin ) )
@@ -915,7 +915,7 @@ public:
         // If your compile breaks here, it is because iter_type is not
         // convertible to type IterT. Check the declaration of your rpattern object.
         typedef typename std::basic_string<CharT, TraitsT, AllocT>::const_iterator iter_type;
-        detail::static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         IterT ibegin = str.begin(), iend = str.begin();
@@ -934,7 +934,7 @@ public:
     {
         // If your compile breaks here, it is because OtherT is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         return detail::regex_access<IterT>::_do_count( *this, ibegin, iend, false );
@@ -945,7 +945,7 @@ public:
     {
         // If your compile breaks here, it is because CharT* is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<CharT*,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<CharT*,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         return detail::regex_access<IterT>::_do_count( *this, szbegin, (CharT*)0, true );
@@ -962,7 +962,7 @@ public:
         // If your compile breaks here, it is because iter_type is not
         // convertible to type IterT. Check the declaration of your rpattern object.
         typedef typename std::basic_string<CharT, TraitsT, AllocT>::const_iterator iter_type;
-        detail::static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         IterT ibegin = str.begin(), iend = str.begin();
@@ -987,7 +987,7 @@ public:
     {
         // If your compile breaks here, it is because OtherT is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<OtherT,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         return detail::regex_access<IterT>::_do_split( *this, results, ibegin, iend, limit, false );
@@ -1003,7 +1003,7 @@ public:
     {
         // If your compile breaks here, it is because Iter2 is not
         // convertible to type IterT. Check the declaration of your rpattern object.
-        detail::static_assert< detail::is_convertible<Char1T*,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<Char1T*,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         // If your compile breaks here, it's because the string you passed in doesn't have
@@ -1028,7 +1028,7 @@ public:
         // If your compile breaks here, it is because iter_type is not
         // convertible to type IterT. Check the declaration of your rpattern object.
         typedef typename std::basic_string<CharT, TraitsT, AllocT>::const_iterator iter_type;
-        detail::static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         IterT ibegin = str.begin(), iend = str.begin();
@@ -1054,7 +1054,7 @@ public:
         // If your compile breaks here, it is because iter_type is not
         // convertible to type IterT. Check the declaration of your rpattern object.
         typedef typename std::basic_string<CharT, TraitsT, AllocT>::const_iterator iter_type;
-        detail::static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
+        detail::atl_static_assert< detail::is_convertible<iter_type,IterT>::value > const iterator_types_are_not_convertible;
         ( void ) iterator_types_are_not_convertible;
 
         return detail::regex_access<IterT>::_do_subst( *this, str, results, pos, len );
@@ -1235,7 +1235,7 @@ inline std::basic_ostream<CharT, TraitsT> & operator<<
 namespace std
 {
     template<>
-    inline void swap( regex::detail::regex_arena & left, regex::detail::regex_arena & right )
+    inline void swap( regex::detail::regex_arena & left, regex::detail::regex_arena & right ) noexcept
     {
         left.swap( right );
     }

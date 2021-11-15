@@ -233,7 +233,7 @@ void Profiler::generateReport(char *filename)
         it++;
     }
     
-    fprintf(outFile, "Total Ticks Accounted = "U64FMT"\n", allTicks);
+    fprintf(outFile, "Total Ticks Accounted = " U64FMT "\n", allTicks);
     fprintf(outFile, "\n");
 
 #ifdef WIN32    

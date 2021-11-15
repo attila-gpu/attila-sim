@@ -109,7 +109,7 @@ private:
     {
         gpu3d::GPURegData data;
         u32bit md;
-        registerType dataType;
+        registerType dataType = {};
 
         RegisterData(gpu3d::GPURegData data_, u32bit md_ ) :
             data(data_), md(md_)

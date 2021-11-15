@@ -42,9 +42,9 @@ using namespace std;
 
 // Patch for windows
 #ifdef WIN32
-    #define U64FMT "%I64d"
+    #define  U64FMT  "%I64d"
 #else
-    #define U64FMT "%lld"
+    #define  U64FMT  "%lld"
 #endif
 
 /*  Memory Controller box constructor.  */
@@ -916,7 +916,7 @@ void MemoryController::clock(u64bit cycle)
 
 /*if ((cycle > 5024880) && (GPU_MOD(cycle, 1000) == 0))
 {
-printf("MC "U64FMT" => gpu mem requests %d mapped mem requests %d free read buffers %d free write buffers %d\n",
+printf("MC " U64FMT " => gpu mem requests %d mapped mem requests %d free read buffers %d free write buffers %d\n",
 cycle, numRequests, numReadyMapped, freeReadBuffers, freeWriteBuffers);
 for(i = 0; i < gpuMemoryBuses; i++)
 printf("MC => mem bus %d requests %d read %d write %d\n", i, numBusRequests[i], numReadBusRequests[i], numWriteBusRequests[i]);
@@ -993,7 +993,7 @@ printf("MC => pending services %d\n", pendingServices);
     /*  Read new memory request from DAC unit.  */
     if (dacReqSignal->read(cycle, (DynamicObject *&) memTrans))
     {
-        GPU_DEBUG_BOX( printf("MemoryController "U64FMT" => Request from DAC unit. \n", cycle); )
+        GPU_DEBUG_BOX( printf("MemoryController "  U64FMT " => Request from DAC unit. \n", cycle); )
 
         /*  Add the memory transaction to the request queue.  */
         receiveTransaction(memTrans);
@@ -1936,7 +1936,7 @@ void MemoryController::issueTransaction(u64bit cycle, u32bit bus)
             panic("MemoryController", "issueTransaction", "Memory transaction from a wrong bank.");
         if (!gpuSharedBanks && (((memTrans->getAddress() & busOffsetMask) + memTrans->getSize()) > gpuBankGranurality))
         {
-printf("MC "U64FMT" > address %x size %d usOffset %x unit %s id %d\n",
+printf("MC " U64FMT " > address %x size %d usOffset %x unit %s id %d\n",
     cycle, memTrans->getAddress(), memTrans->getSize(), (memTrans->getAddress() & busOffsetMask),
     busNames[memTrans->getRequestSource()], memTrans->getUnitID());
             panic("MemoryController", "issueTransaction", "Memory transaction crosses bank boundary.");
@@ -1974,7 +1974,7 @@ printf("MC "U64FMT" > address %x size %d usOffset %x unit %s id %d\n",
 
                 GPU_DEBUG_BOX
                 (
-                    printf("MemoryController "U64FMT" => Issuing MT_READ_REQ (%x, %d) from unit %s id %d to bus %d.\n", cycle, address, size,
+                    printf("MemoryController " U64FMT " => Issuing MT_READ_REQ (%x, %d) from unit %s id %d to bus %d.\n", cycle, address, size,
                        busNames[memTrans->getRequestSource()], memTrans->getUnitID(), bus);
                 )
 
@@ -1983,7 +1983,7 @@ printf("MC "U64FMT" > address %x size %d usOffset %x unit %s id %d\n",
                     if ((address >= gpuMemorySize) ||
                         ((address + size) > gpuMemorySize))
                     {
-                        printf("MC "U64FMT" => checking error\n", cycle);
+                        printf("MC " U64FMT " => checking error\n", cycle);
 
                         printf("MT_READ_REQ address %x size %d unit %s unit ID %d\n",
                             address, size, busNames[memTrans->getRequestSource()], memTrans->getUnitID());
@@ -1997,7 +1997,7 @@ printf("MC "U64FMT" > address %x size %d usOffset %x unit %s id %d\n",
                 //GPU_ASSERT(
                 //    if (*((u32bit *) &gpuMemory[address & SPACE_ADDRESS_MASK]) == 0xDEADCAFE)
                 //    {
-                //        printf("MC "U64FMT" => Warning.  Unallocated memory -> MT_READ_REQ : address %x size %d unit %s unitID %d to bus %d\n", cycle, address, size,
+                //        printf("MC " U64FMT " => Warning.  Unallocated memory -> MT_READ_REQ : address %x size %d unit %s unitID %d to bus %d\n", cycle, address, size,
                 //            busNames[memTrans->getRequestSource()], memTrans->getUnitID(), bus);
                 //        //panic("MemoryController", "issueTransaction", "Reading unallocated memory.");
                 //    }
@@ -2101,7 +2101,7 @@ printf("MC "U64FMT" > address %x size %d usOffset %x unit %s id %d\n",
                     if ((address >= gpuMemorySize) ||
                         ((address + size) > gpuMemorySize))
                     {
-                        printf("MC "U64FMT" => checking error\n", cycle);
+                        printf("MC " U64FMT " => checking error\n", cycle);
 
                         printf("MT_WRITE_DATA address %x size %d unit %s unit ID %d\n",
                             address, size, busNames[memTrans->getRequestSource()], memTrans->getUnitID());
@@ -2118,7 +2118,7 @@ printf("MC "U64FMT" > address %x size %d usOffset %x unit %s id %d\n",
                 )
 
                 GPU_DEBUG_BOX(
-                    printf("MemoryController "U64FMT" => Issuing MT_WRITE (%x, %d)"
+                    printf("MemoryController " U64FMT " => Issuing MT_WRITE (%x, %d)"
                     "from unit %s id %d to bus %d.\n", cycle, address, size,
                         busNames[memTrans->getRequestSource()], memTrans->getUnitID(), bus);
                 )
@@ -2276,7 +2276,7 @@ void MemoryController::issueSystemTransaction(u64bit cycle)
                 if (((address & SPACE_ADDRESS_MASK) >= mappedMemorySize) ||
                     (((address & SPACE_ADDRESS_MASK) + size) > mappedMemorySize))
                 {
-                    printf("MC "U64FMT" => checking error\n", cycle);
+                    printf("MC " U64FMT " => checking error\n", cycle);
 
                     printf("MT_READ_REQ address %x size %d unit %s unit ID %d\n",
                         address, size, busNames[memTrans->getRequestSource()], memTrans->getUnitID());
@@ -2289,7 +2289,7 @@ void MemoryController::issueSystemTransaction(u64bit cycle)
             //GPU_ASSERT(
                 //if (*((u32bit *) &mappedMemory[address & SPACE_ADDRESS_MASK]) == 0xDEADCAFE)
                 //{
-                //   printf("MC "U64FMT" =>  Warning.  Unallocated memory -> MT_READ_REQ : address %x size %d unit %s unitID %d\n", cycle, address, size,
+                //   printf("MC " U64FMT " =>  Warning.  Unallocated memory -> MT_READ_REQ : address %x size %d unit %s unitID %d\n", cycle, address, size,
                 //        busNames[memTrans->getRequestSource()], memTrans->getUnitID());
                 //   panic("MemoryController", "issueSystemTransaction", "Reading unallocated memory.");
                 //}
@@ -2305,7 +2305,7 @@ void MemoryController::issueSystemTransaction(u64bit cycle)
             mappedMemoryRequestSignal[0]->write(cycle, auxMemTrans, MAPPED_MEMORY_LATENCY);
 
 //if (cycle > 1769000)
-//printf("MC "U64FMT" => memTrans %p\n", cycle, auxMemTrans);
+//printf("MC " U64FMT " => memTrans %p\n", cycle, auxMemTrans);
 
             /*  Set bus as not available.  */
             systemBus[0] = cycle;
@@ -2352,7 +2352,7 @@ void MemoryController::issueSystemTransaction(u64bit cycle)
                 if (((address & SPACE_ADDRESS_MASK) >= mappedMemorySize) ||
                     (((address & SPACE_ADDRESS_MASK) + size) > mappedMemorySize))
                 {
-                    printf("MC "U64FMT" => checking error\n", cycle);
+                    printf("MC " U64FMT " => checking error\n", cycle);
                     printf("MT_WRITE_DATA address %x size %d unit %s unit ID %d\n",
                         address, size, busNames[memTrans->getRequestSource()], memTrans->getUnitID());
 
@@ -2410,7 +2410,7 @@ void MemoryController::issueSystemTransaction(u64bit cycle)
             mappedMemoryRequestSignal[1]->write(cycle, memTrans, MAPPED_MEMORY_LATENCY);
 
 //if (cycle > 1769000)
-//printf("MC "U64FMT" => memTrans %p\n", cycle, auxMemTrans);
+//printf("MC " U64FMT " => memTrans %p\n", cycle, auxMemTrans);
 
             /*  Set system bus as not available.  */
             systemBus[1] = cycle;
@@ -2813,7 +2813,7 @@ void MemoryController::updateMemoryBus(u64bit cycle, u32bit bus)
                         wakeUpWriteRequests(bank, currentBusRequest[bus]);
                     }
 
-//printf("MC "U64FMT" => remove MT_READ_DATA request %p bus %d\n", cycle, moduleTrans[bus], currentBusRequest[bus]);
+//printf("MC " U64FMT " => remove MT_READ_DATA request %p bus %d\n", cycle, moduleTrans[bus], currentBusRequest[bus]);
 
                     /*  Remove request.  */
                     removeRequest(currentBusRequest[bus]);
@@ -2843,7 +2843,7 @@ void MemoryController::updateMemoryBus(u64bit cycle, u32bit bus)
                         wakeUpReadRequests(bank, currentBusRequest[bus]);
                     }
 
-//printf("MC "U64FMT" => remove MT_WRITE_DATA request %p bus %d\n", cycle, moduleTrans[bus], currentBusRequest[bus]);
+//printf("MC " U64FMT " => remove MT_WRITE_DATA request %p bus %d\n", cycle, moduleTrans[bus], currentBusRequest[bus]);
 
                     /*  Remove request.  */
                     removeRequest(currentBusRequest[bus]);
@@ -2906,7 +2906,7 @@ void MemoryController::updateSystemBus(u64bit cycle, u32bit bus)
         currentUnit = systemTrans[bus]->getRequestSource();
 
 //if (cycle > 1769740)
-//printf("MC "U64FMT" => update -> memTrans %p\n", cycle, systemTrans[bus]);
+//printf("MC " U64FMT " => update -> memTrans %p\n", cycle, systemTrans[bus]);
 
         /*  Check end of transaction.  */
         if (busCycles[SYSTEM][bus] == 0)
@@ -2963,7 +2963,7 @@ void MemoryController::updateSystemBus(u64bit cycle, u32bit bus)
 
 
                 default:
-printf(" MC "U64FMT" >> transaction %p command %d data %d\n", cycle, systemTrans[bus], systemTrans[bus]->getCommand(),
+printf(" MC "  U64FMT  " >> transaction %p command %d data %d\n", cycle, systemTrans[bus], systemTrans[bus]->getCommand(),
 *((u32bit *) systemTrans[bus]));
                     panic("MemoryController", "updateSystemBus", "Unsupported memory transaction.");
                     break;
@@ -2998,7 +2998,7 @@ void MemoryController::mappedTransaction(u64bit cycle, u32bit bus)
 
         GPU_DEBUG_BOX(
 //if (cycle > 1769000)
-            printf("MemoryController "U64FMT" => Transaction %p from system memory bus %d.\n", cycle, memTrans, bus);
+            printf("MemoryController " U64FMT " => Transaction %p from system memory bus %d.\n", cycle, memTrans, bus);
         )
 
         /*  Set system memory bus reserved cycles.  */

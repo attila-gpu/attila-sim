@@ -1,8 +1,6 @@
 ATTILA GPU Simulator
 ===============
 
-[![Compile](https://travis-ci.org/attila-gpu/attila-sim.svg)](https://travis-ci.org/attila-gpu/attila-sim)
-
 Introduction
 -------------
 
@@ -20,7 +18,7 @@ by patents (for example DXTC/S3TC compression or the Z compression algorithm).
 No documentation about the source code, the simulator or the library is provided within
 this package.  Check for documentation available documentation in the ATTILA wiki:
 
-        https://attila.ac.upc.edu
+    attila.ac.upc.edu
 
 
 How to compile on GNU/Linux
@@ -28,31 +26,31 @@ How to compile on GNU/Linux
 
     Usage: make [clean | simclean]
            make [what options]
-
+    
     clean      - Delete all OBJs and binary files.
     simclean   - Delete only simulator related OBJs, and binary files.
-
+    
     what:
            all                  - Build ATTILA simulator and tools
            bGPU                 - Build ATTILA simulator and emulator
            gl2atila             - Build gl2atila
            extractTraceRegion   - Build extractTraceRegion
-
+    
     options:
-
+    
             CONFIG={ debug  | profiling | optimized | verbose }
                 debug     - Compile with debug information
                 profiling - Compile with profiling information
                 optimized - Maximum optimization (default)
-
+    
             CPU=<cpu>
                 <cpu>   - Target cpu for compilation. This lets apply some optimizations.
                           Possible values: x86, x86_64, pentium4, athlon, core2
-
+    
             VERBOSE={ yes | no }
                 yes     - Activate debug messages
                 no      - Deactive debug messages (default)
-
+    
             PLATFORM=<platf>
                 <platf> - Target platform for compilation.
                           Possible values: linux (default), cygwin

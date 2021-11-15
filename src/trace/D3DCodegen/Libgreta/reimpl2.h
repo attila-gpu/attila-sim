@@ -358,8 +358,8 @@ inline void * pool_impl<AllocT>::allocate( size_t size )
     void * pnew = m_data.m_pfirst->m_data + m_data.m_pfirst->m_offset;
 
     // ensure returned pointers are always suitably aligned
-    m_data.m_pfirst->m_offset += ( ( size + alignof<not_pod>::value - 1 )
-                                 & ~( alignof<not_pod>::value - 1 ) );
+    m_data.m_pfirst->m_offset += ( ( size + atl_alignof<not_pod>::value - 1 )
+                                 & ~( atl_alignof<not_pod>::value - 1 ) );
 
     return pnew;
 }
