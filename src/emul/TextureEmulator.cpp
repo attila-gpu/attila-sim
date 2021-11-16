@@ -2124,7 +2124,7 @@ void TextureEmulator::texelCoord2D(u32bit textUnit, u32bit level, FilterMode fil
     {
         GPU_ASSERT(
             if (textureNonNormalized[textUnit])
-                printf("TextureEmulator", "texelCoord", "Anistropic filtering not implemented with non-normalized coordinates.");
+                printf("TextureEmulator, texelCoord, Anistropic filtering not implemented with non-normalized coordinates.");
         )
         
         //  Apply anisotropic sample offset.

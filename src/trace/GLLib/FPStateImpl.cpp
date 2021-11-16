@@ -112,6 +112,7 @@ FPState::TextureUnit FPStateImpl::getTextureUnit(GLuint unit)
         }
         default: return TextureUnit(unit);
     }
+    return TextureUnit(unit);
 }
 
 int FPStateImpl::maxTextureUnits()

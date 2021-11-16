@@ -39,7 +39,7 @@ public:
     ACDXIRNode();
     ACDXIRNode(unsigned int line);
 
-    void setLine(unsigned int line) { this->line = line; }
+    void setLine(unsigned int line_) { this->line = line_; }
     
     unsigned int getLine() const { return line; }
 
@@ -67,9 +67,9 @@ public:
     IRProgram();
     IRProgram(const std::string& headerstring);
 
-    void setHeaderString(const std::string& headerString)   {   this->headerString = headerString;  }
-    void addOptionList(std::list<IROption *>* programOptions)   {   this->programOptions = programOptions;  }
-    void addStatementList(std::list<IRStatement *>* programStatements)  {   this->programStatements = programStatements;    }
+    void setHeaderString(const std::string& headerString_)   {   this->headerString = headerString_;  }
+    void addOptionList(std::list<IROption *>* programOptions_)   {   this->programOptions = programOptions_;  }
+    void addStatementList(std::list<IRStatement *>* programStatements_)  {   this->programStatements = programStatements_;    }
 
     std::string getHeaderString() const { return headerString; }
 
@@ -171,8 +171,8 @@ private:
 public:
     IRSampleInstruction(unsigned int line, const std::string& opcode);
     
-    void setTextureImageUnit(unsigned int textureImageUnit)   {  this->textureImageUnit = textureImageUnit; }
-    void setTextureTarget(const std::string& glTextureTarget) {  this->glTextureTarget = glTextureTarget;   }
+    void setTextureImageUnit(unsigned int textureImageUnit_)   {  this->textureImageUnit = textureImageUnit_; }
+    void setTextureTarget(const std::string& glTextureTarget_) {  this->glTextureTarget = glTextureTarget_;   }
     
     unsigned int getTextureImageUnit() const {  return textureImageUnit;  }
     std::string getGLTextureTarget() const   {  return glTextureTarget;   }
@@ -238,7 +238,7 @@ private:
 public:
     IRSwizzleInstruction(unsigned int line, const std::string& opcode);
     
-    void setSwizzleComponents(IRSwizzleComponents* swizzleComps)   { this->swizzleComps = swizzleComps; }
+    void setSwizzleComponents(IRSwizzleComponents* swizzleComps_)   { this->swizzleComps = swizzleComps_; }
     
     IRSwizzleComponents* getSwizzleComponents() const { return swizzleComps;  }
     
@@ -281,9 +281,9 @@ private:
 public:
     IRDstOperand(const std::string& destination);
     
-    void setWriteMask(const std::string& writeMask)                  {  this->writeMask = writeMask;    }
-    void setIsFragmentResultRegister(bool isFragmentResultRegister)  {  this->isFragmentResultRegister = isFragmentResultRegister;  }
-    void setIsVertexResultRegister(bool isVertexResultRegister)      {  this->isVertexResultRegister = isVertexResultRegister;  }
+    void setWriteMask(const std::string& writeMask_)                  {  this->writeMask = writeMask_;    }
+    void setIsFragmentResultRegister(bool isFragmentResultRegister_)  {  this->isFragmentResultRegister = isFragmentResultRegister_;  }
+    void setIsVertexResultRegister(bool isVertexResultRegister_)      {  this->isVertexResultRegister = isVertexResultRegister_;  }
     
     std::string getWriteMask() const         {   return writeMask;  }
     std::string getDestination() const       {   return destination;    }
@@ -339,19 +339,19 @@ private:
 public:
     IRSrcOperand(const std::string& source);
 
-    void setIsFragmentRegister(bool isFragmentRegister) { this->isFragmentRegister = isFragmentRegister;    }
-    void setIsVertexRegister(bool isVertexRegister)     { this->isVertexRegister = isVertexRegister;    }
-    void setSwizzleMask(const std::string& swizzleMask) { this->swizzleMask = swizzleMask;  }
+    void setIsFragmentRegister(bool isFragmentRegister_) { this->isFragmentRegister = isFragmentRegister_;    }
+    void setIsVertexRegister(bool isVertexRegister_)     { this->isVertexRegister = isVertexRegister_;    }
+    void setSwizzleMask(const std::string& swizzleMask_) { this->swizzleMask = swizzleMask_;  }
     void setNegateFlag()                                { this->negateFlag = true;  }
-    void setArrayAddressing(IRArrayAddressing*  arrayAddrInfo)
+    void setArrayAddressing(IRArrayAddressing*  arrayAddrInfo_)
     {   
         this->isArrayAddressing = true; 
-        this->arrayAddrInfo = arrayAddrInfo;
+        this->arrayAddrInfo = arrayAddrInfo_;
     }
-    void setParamBinding(IRParamBinding *paramBinding)
+    void setParamBinding(IRParamBinding *paramBinding_)
     {   
         this->isParamBinding = true;
-        this->paramBinding = paramBinding;
+        this->paramBinding = paramBinding_;
     }
 
     std::string getSource() const                 {   return source;    }
@@ -390,7 +390,7 @@ private:
 public:
     IRALIASStatement(unsigned int line, const std::string& name);
 
-    void setAlias(const std::string& alias) {   this->alias = alias;    }
+    void setAlias(const std::string& alias_) {   this->alias = alias_;    }
     
     std::string getAlias() const {   return alias;   }
     
@@ -405,7 +405,7 @@ private:
 public:
     IRTEMPStatement(unsigned int line, const std::string& name);
 
-    void setOtherTemporaries(std::list<std::string>* otherTemporariesNames) {    this->otherTemporariesNames = otherTemporariesNames;   }
+    void setOtherTemporaries(std::list<std::string>* otherTemporariesNames_) {    this->otherTemporariesNames = otherTemporariesNames_;   }
 
     std::list<std::string>* getOtherTemporaries() const  { return otherTemporariesNames; }
     
@@ -421,7 +421,7 @@ private:
 public:
     IRADDRESSStatement(unsigned int line, const std::string& name);
 
-    void setOtherAddressRegisters(std::list<std::string>* otherAddressRegisters) {    this->otherAddressRegisters = otherAddressRegisters;   }
+    void setOtherAddressRegisters(std::list<std::string>* otherAddressRegisters_) {    this->otherAddressRegisters = otherAddressRegisters_;   }
 
     std::list<std::string>* getOtherAddressRegisters() const  { return otherAddressRegisters; }
     
@@ -437,7 +437,7 @@ private:
 public:
     IRATTRIBStatement(unsigned int line, const std::string& name);
     
-    void setInputAttribute(const std::string& inputAttribute)    {   this->inputAttribute = inputAttribute; }
+    void setInputAttribute(const std::string& inputAttribute_)    {   this->inputAttribute = inputAttribute_; }
     
     std::string getInputAttribute() const     {   return inputAttribute;  }
     
@@ -469,7 +469,7 @@ private:
 public:
     IROUTPUTStatement(unsigned int line, const std::string& name);
 
-    void setOutputAttribute(const std::string& outputAttribute)  { this->outputAttribute = outputAttribute; }
+    void setOutputAttribute(const std::string& outputAttribute_)  { this->outputAttribute = outputAttribute_; }
     
     std::string getOutputAttribute() const    {   return outputAttribute; }
     
@@ -502,8 +502,8 @@ class IRPARAMStatement: public IRNamingStatement
 public:
     IRPARAMStatement(unsigned int line, const std::string& name, bool isMultipleBindings=false);
 
-    void setParamBindings(std::list<IRParamBinding *>* paramBindings)    {   this->paramBindings = paramBindings;  }
-    void setSize(int size)                                               {   this->size = size;   }
+    void setParamBindings(std::list<IRParamBinding *>* paramBindings_)    {   this->paramBindings = paramBindings_;  }
+    void setSize(int size_)                                               {   this->size = size_;   }
 
     int getSize() const                                   {   return size;    }
     bool getIsMultipleBindings() const                    {   return isMultipleBindings;    }
@@ -521,7 +521,7 @@ private:
 public:
     IRParamBinding();
 
-    void setIsImplicitBinding(bool isImplicitBinding) {   this->isImplicitBinding = isImplicitBinding;   }
+    void setIsImplicitBinding(bool isImplicitBinding_) {   this->isImplicitBinding = isImplicitBinding_;   }
     
     bool getIsImplicitBinding() const {   return isImplicitBinding;   }
 
@@ -545,10 +545,10 @@ private:
 public:
     IRLocalEnvBinding(PType paramType);
     
-    void setIndices(unsigned int minIndex, unsigned int maxIndex)   
+    void setIndices(unsigned int minIndex_, unsigned int maxIndex_)   
     {
-        this->minIndex = minIndex;
-        this->maxIndex = maxIndex;
+        this->minIndex = minIndex_;
+        this->maxIndex = maxIndex_;
     }
     
     PType getType() const                         {   return paramType;   }
