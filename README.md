@@ -1,6 +1,10 @@
 ATTILA GPU Simulator
 ===============
 
+Main solution in `attila-sim\src\win32-VS2005\ATILA.sln`. 
+
+Bison and Flex in root folder should be added in PATH, in order to build.
+
 Introduction
 -------------
 
@@ -55,6 +59,83 @@ How to compile on GNU/Linux
                 <platf> - Target platform for compilation.
                           Possible values: linux (default), cygwin
 
+How to compile on Windows
+--------------------------
+
+A) ATTILA simulator and emulator binaries
+
+    -> Open the ATTILA solution file in "src/win32-VS2005/ATILA.sln" with Visual Studio 2005 or higher
+    -> Select the target architecture
+        - Win32 for the 32-bit build
+        - x64 for 64-bit build
+    -> Select the configuration
+        - Optimized : full optimization build
+        - Debug     : debug build
+        - Profile   : profiling build
+    -> Build the selected project
+        - bGPU-emu  : ATTILA emulator
+        - bGPU-Uni  : ATTILA simulator
+        - bGPU      : ATTILA non-unified shader architecture simulator (deprecated may not work)
+    -> The compiled binary can be found on the "src/win32-VS2005/{Target}/{Configuration}/" directory
+
+B) OpenGL tools
+
+    -> Open the ATTILA solution file "src/win32-VS2005/ATILA.sln" with Visual Studio 2005 or higher
+    -> Set the target architecture to Win32
+    -> Select the configuration
+        - Optimized ; full optimization build
+        - Debug     : debug build
+        - Profile   : profiling build
+    -> Build the selected project
+        - GLInterceptor : OpenGL trace capturer, creates opengl32.dll
+        - GLPlayer      : OpenGL trace player
+    -> The compiled library or binaries can be found on the "src/win32-VS2005/win32/{Configuration}/" directory
+
+C) D3D9 PIX player
+
+    -> Open the ATTILA solution file "src/win32-VS2005/ATILA.sln" with Visual Studio 2005 or higher.
+    -> Set the target architecture to Win32
+    -> Select the configuration
+        - Optimized ; full optimization build
+        - Debug     : debug build
+        - Profile   : profiling build
+    -> Build the D3DPlayer4Windows project
+    -> The compiled binary can be found on the "src/win32-VS2005/win32/{Configuration}/" directory
+
+D) DXInterceptor
+
+    1) Build the external libraries first
+        -> Open the DXInterceptor external libraries solution file "src\extern-libs\DXInterceptorLibs\DXInterceptorLibs.sln"
+           with Visual Studio 2005 or higher
+        -> Select the configuration
+        -> Build all
+    2) Build the DXInterceptor tools
+        -> Open the DXInterceptor solution file "src\trace\DXInterceptor\DXInterceptor.sln" with Visual Studio 2005 or higher
+        -> Select the configuration
+        -> Build all
+
+E) Tools in the ATTILA solution
+
+    -> Open the ATTILA solution file in "src/win32-VS2005/ATILA.sln" with Visual Studio 2005 or higher
+    -> Select the target architecture
+        - Win32 for the 32-bit build
+        - x64 for 64-bit build
+    -> Select the configuration
+        - Optimized : full optimization build
+        - Debug     : debug build
+        - Profile   : profiling build
+    -> Build the selected project
+        - ALLA
+        - extractTraceRegion
+        - gl2atila
+        - MemoryControllerTest
+        - ShaderProgramTest
+        - TestCreator
+    -> The compiled binary can be found on the "src/win32-VS2005/{Target}/{Configuration}/" directory
+
+F) Other tools
+
+A GNU/Linux makefile or Visual Studio project may be on the tool directory.
 
 Contents of the package
 ------------------------

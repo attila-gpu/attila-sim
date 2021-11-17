@@ -350,7 +350,7 @@ private:
         DumpEventInfo(const acd_char* file, acd_enum flags, acd_uint frame, acd_uint batch)
             : fileName(file), flags(flags), frame(frame), batch(batch), valid(true) {;}
 
-        bool operator ==(const DumpEventInfo& val)    {    return ((frame == val.frame) && (batch == val.batch));    }
+        bool operator ==(const DumpEventInfo& val) const   {    return ((frame == val.frame) && (batch == val.batch));    }
     };
 
     std::list<DumpEventInfo> _dumpEventList;
